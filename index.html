@@ -1,0 +1,3405 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Laporan Kerja Harian</title>
+
+  <!-- Google Font -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- Barcode / QR Scanner -->
+  <script
+    src="https://unpkg.com/html5-qrcode"
+    type="text/javascript">
+  </script>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f4f7fc;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    /* ==========================================
+       HEADER
+    ========================================== */
+
+    header {
+      background-color: #007bff;
+      color: white;
+      padding: 20px;
+      font-size: 30px;
+      font-weight: 600;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* ==========================================
+       FORM CONTAINER
+    ========================================== */
+
+    .form-container {
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      width: calc(100% - 30px);
+      max-width: 650px;
+      margin: 25px auto;
+    }
+
+    h2 {
+      text-align: center;
+      color: #007bff;
+      font-size: 24px;
+      margin-top: 0;
+      margin-bottom: 25px;
+      font-weight: 500;
+    }
+
+    /* ==========================================
+       SECTION
+    ========================================== */
+
+    .section {
+      margin-bottom: 25px;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #007bff;
+      border-bottom: 2px solid #007bff;
+      padding-bottom: 8px;
+      margin-bottom: 15px;
+    }
+
+    /* ==========================================
+       LABEL
+    ========================================== */
+
+    label {
+      display: block;
+      font-size: 15px;
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+
+    /* ==========================================
+       INPUT
+    ========================================== */
+
+    input,
+    textarea,
+    select,
+    button {
+      width: 100%;
+      padding: 13px;
+      margin-bottom: 14px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      font-family: inherit;
+      font-size: 16px;
+      background-color: #fafafa;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      border-color: #007bff;
+      outline: none;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+      background-color: white;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    /* ==========================================
+       PIC
+    ========================================== */
+
+    .pic-box {
+      background-color: #f8f9fa;
+      border: 1px solid #e1e1e1;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 15px;
+    }
+
+    .pic-title {
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #555;
+    }
+
+    .employee-name {
+      background-color: #e9f5ff;
+      border: 1px solid #b8ddff;
+      color: #0056b3;
+      font-weight: 500;
+    }
+
+    .employee-status {
+      font-size: 13px;
+      margin-top: -8px;
+      margin-bottom: 12px;
+      min-height: 16px;
+    }
+
+    .status-success {
+      color: #198754;
+    }
+
+    .status-error {
+      color: #dc3545;
+    }
+
+    /* ==========================================
+       ID MESIN
+    ========================================== */
+
+    .machine-input-wrapper {
+      position: relative;
+      display: flex;
+      gap: 10px;
+      align-items: stretch;
+    }
+
+    .machine-input-wrapper input {
+      flex: 1;
+      margin-bottom: 14px;
+    }
+
+    .scan-button {
+      width: auto;
+      min-width: 145px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-bottom: 14px;
+      white-space: nowrap;
+    }
+
+    .scan-button:hover {
+      background-color: #218838;
+    }
+
+    .scan-button:disabled {
+      background-color: #999;
+      cursor: not-allowed;
+    }
+
+    .optional-text {
+      color: #777;
+      font-size: 13px;
+      font-weight: 400;
+    }
+
+    .machine-info {
+      background-color: #f8f9fa;
+      border: 1px solid #e1e1e1;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 13px;
+      color: #666;
+      margin-top: -5px;
+      margin-bottom: 10px;
+    }
+
+    /* ==========================================
+       BARCODE SCANNER
+    ========================================== */
+
+    .scanner-container {
+      display: none;
+      background-color: #111;
+      border-radius: 12px;
+      padding: 15px;
+      margin-top: 10px;
+      margin-bottom: 20px;
+    }
+
+    .scanner-title {
+      color: white;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    #reader {
+      width: 100%;
+      background-color: white;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .close-scanner-button {
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      margin-top: 12px;
+      margin-bottom: 0;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .close-scanner-button:hover {
+      background-color: #c82333;
+    }
+
+    .scan-result {
+      display: none;
+      background-color: #e9f7ef;
+      border: 1px solid #b7dfc6;
+      color: #155724;
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin-top: 5px;
+      margin-bottom: 14px;
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    /* ==========================================
+       TIME
+    ========================================== */
+
+    .time-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .duration-box {
+      background-color: #e9f5ff;
+      border: 1px solid #b8ddff;
+      border-radius: 10px;
+      padding: 13px;
+      margin-top: 5px;
+      color: #0056b3;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    /* ==========================================
+       PHOTO
+    ========================================== */
+
+    .photo-box {
+      border: 2px dashed #bbb;
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 20px;
+      background-color: #fafafa;
+    }
+
+    .photo-box-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+
+    /*
+      Input file sengaja disembunyikan.
+      User memilih melalui tombol Kamera / Galeri.
+    */
+
+    .hidden-file-input {
+      display: none;
+    }
+
+    .photo-button-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .camera-button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .camera-button:hover {
+      background-color: #0056b3;
+    }
+
+    .gallery-button {
+      background-color: #6c757d;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .gallery-button:hover {
+      background-color: #545b62;
+    }
+
+    .photo-name {
+      font-size: 13px;
+      color: #666;
+      margin-top: 5px;
+      margin-bottom: 10px;
+      word-break: break-word;
+    }
+
+    .photo-preview {
+      display: none;
+      width: 100%;
+      max-height: 300px;
+      object-fit: contain;
+      border-radius: 8px;
+      margin-top: 10px;
+      border: 1px solid #ddd;
+    }
+
+    /* ==========================================
+       STATUS
+    ========================================== */
+
+    .status-box {
+      display: none;
+      padding: 13px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      font-weight: 500;
+      text-align: center;
+    }
+
+    .status-loading {
+      display: block;
+      background-color: #fff3cd;
+      color: #856404;
+      border: 1px solid #ffeeba;
+    }
+
+    .status-success {
+      display: block;
+      background-color: #d1e7dd;
+      color: #0f5132;
+      border: 1px solid #badbcc;
+    }
+
+    .status-error {
+      display: block;
+      background-color: #f8d7da;
+      color: #842029;
+      border: 1px solid #f5c2c7;
+    }
+
+    /* ==========================================
+       SUBMIT
+    ========================================== */
+
+    .submit-button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      font-weight: 700;
+      padding: 15px;
+      transition: 0.3s;
+    }
+
+    .submit-button:hover {
+      background-color: #0056b3;
+    }
+
+    .submit-button:disabled {
+      background-color: #999;
+      cursor: not-allowed;
+    }
+
+    /* ==========================================
+       RESPONSIVE
+    ========================================== */
+
+    @media (max-width: 600px) {
+
+      header {
+        font-size: 23px;
+        padding: 18px 10px;
+      }
+
+      .form-container {
+        padding: 18px;
+        margin-top: 15px;
+      }
+
+      h2 {
+        font-size: 21px;
+      }
+
+      .time-container {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+
+      .machine-input-wrapper {
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .machine-input-wrapper input {
+        margin-bottom: 8px;
+      }
+
+      .scan-button {
+        width: 100%;
+        margin-bottom: 14px;
+      }
+
+      .photo-button-container {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+
+      input,
+      textarea,
+      select,
+      button {
+        font-size: 16px;
+      }
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+  <!-- ==========================================
+       HEADER
+  ========================================== -->
+
+  <header>
+    LAPORAN KERJA HARIAN
+  </header>
+
+
+  <!-- ==========================================
+       FORM
+  ========================================== -->
+
+  <div class="form-container">
+
+    <h2>
+      Form Laporan Pekerjaan
+    </h2>
+
+
+    <div
+      id="statusBox"
+      class="status-box">
+    </div>
+
+
+    <form id="workForm">
+
+      <!-- ======================================
+           INFORMASI LAPORAN
+      ======================================= -->
+
+      <div class="section">
+
+        <div class="section-title">
+          📅 INFORMASI LAPORAN
+        </div>
+
+
+        <label for="tanggal">
+          Tanggal
+        </label>
+
+        <input
+          type="date"
+          id="tanggal"
+          name="tanggal"
+          required
+        >
+
+      </div>
+
+
+      <!-- ======================================
+           FACTORY
+      ======================================= -->
+
+      <div class="section">
+
+        <div class="section-title">
+          🏭 FACTORY
+        </div>
+
+
+        <label for="factory">
+          Factory
+        </label>
+
+        <select
+          id="factory"
+          name="factory"
+          required
+        >
+
+          <option value="" disabled selected>
+            Pilih Factory
+          </option>
+
+          <option value="Plant A">
+            Plant A
+          </option>
+
+          <option value="UPS Plant A">
+            UPS Plant A
+          </option>
+
+          <option value="Plant B">
+            Plant B
+          </option>
+
+          <option value="UPS Plant B">
+            UPS Plant B
+          </option>
+
+          <option value="Plant C">
+            Plant C
+          </option>
+
+          <option value="UPS Plant C">
+            UPS Plant C
+          </option>
+
+          <option value="Plant D">
+            Plant D
+          </option>
+
+          <option value="UPS Plant D">
+            UPS Plant D
+          </option>
+
+          <option value="Warehouse">
+            Warehouse
+          </option>
+
+          <option value="LAINNYA">
+            Lainnya
+          </option>
+
+        </select>
+
+
+        <input
+          type="text"
+          id="factoryOther"
+          name="factoryOther"
+          placeholder="Masukkan nama factory..."
+          style="display:none;"
+        >
+
+      </div>
+
+
+      <!-- ======================================
+           AREA
+      ======================================= -->
+
+      <div class="section">
+
+        <div class="section-title">
+          📍 AREA
+        </div>
+
+
+        <label for="area">
+          Area
+        </label>
+
+        <select
+          id="area"
+          name="area"
+          required
+        >
+
+          <option value="" disabled selected>
+            Pilih Area
+          </option>
+
+          <option value="F1-SEWING">
+            F1-SEWING
+          </option>
+
+          <option value="F2-SEWING">
+            F2-SEWING
+          </option>
+
+          <option value="F1-ASP">
+            F1-ASP
+          </option>
+
+          <option value="F2-ASP">
+            F2-ASP
+          </option>
+
+          <option value="F2-BORDIR">
+            F2-BORDIR
+          </option>
+
+          <option value="LAINNYA">
+            Lainnya
+          </option>
+
+        </select>
+
+
+        <input
+          type="text"
+          id="areaOther"
+          name="areaOther"
+          placeholder="Masukkan nama area..."
+          style="display:none;"
+        >
+
+      </div>
+
+
+      <!-- ======================================
+           LINE
+      ======================================= -->
+
+      <div class="section">
+
+        <div class="section-title">
+          🔢 LINE
+        </div>
+
+
+        <label for="line">
+          Line
+        </label>
+
+        <select
+          id="line"
+          name="line"
+          required
+        >
+
+          <option value="" disabled selected>
+            Pilih Line
+          </option>
+
+          <option value="LINE 1">1</option>
+          <option value="LINE 2">2</option>
+          <option value="LINE 3">3</option>
+          <option value="LINE 4">4</option>
+          <option value="LINE 5">5</option>
+          <option value="LINE 6">6</option>
+          <option value="LINE 7">7</option>
+          <option value="LINE 8">8</option>
+          <option value="LINE 9">9</option>
+          <option value="LINE 10">10</option>
+          <option value="LINE 11">11</option>
+          <option value="LINE 12">12</option>
+          <option value="LINE 13">13</option>
+          <option value="LINE 14">14</option>
+          <option value="LINE 15">15</option>
+          <option value="LINE 16">16</option>
+          <option value="LINE 17">17</option>
+          <option value="LINE 18">18</option>
+          <option value="LINE 19">19</option>
+          <option value="LINE 20">20</option>
+          <option value="LINE 21">21</option>
+          <option value="LINE 22">22</option>
+          <option value="LINE 23">23</option>
+          <option value="LINE 24">24</option>
+          <option value="LINE 25">25</option>
+          <option value="LINE 26">26</option>
+          <option value="LINE 27">27</option>
+          <option value="LINE 28">28</option>
+          <option value="LINE 29">29</option>
+          <option value="LINE 30">30</option>
+          <option value="LINE 31">31</option>
+          <option value="LINE 32">32</option>
+          <option value="LINE 33">33</option>
+          <option value="LINE 34">34</option>
+          <option value="LINE 35">35</option>
+          <option value="LINE 36">36</option>
+          <option value="LINE 37">37</option>
+          <option value="LINE 38">38</option>
+          <option value="LINE 39">39</option>
+          <option value="LINE 40">40</option>
+          <option value="LINE 41">41</option>
+          <option value="LINE 42">42</option>
+          <option value="LINE 43">43</option>
+          <option value="LINE 44">44</option>
+          <option value="LINE 45">45</option>
+          <option value="LINE 46">46</option>
+          <option value="LINE 47">47</option>
+          <option value="LINE 48">48</option>
+          <option value="LINE 49">49</option>
+          <option value="LINE 50">50</option>
+          <option value="LINE 51">51</option>
+          <option value="LINE 52">52</option>
+          <option value="LINE 53">53</option>
+          <option value="LINE 54">54</option>
+          <option value="LINE 55">55</option>
+          <option value="LINE 56">56</option>
+          <option value="LINE 57">57</option>
+          <option value="LINE 58">58</option>
+          <option value="LINE 59">59</option>
+          <option value="LINE 60">60</option>
+
+          <option value="LAINNYA">
+            Lainnya
+          </option>
+
+        </select>
+
+
+        <input
+          type="text"
+          id="lineOther"
+          name="lineOther"
+          placeholder="Masukkan line..."
+          style="display:none;"
+        >
+
+      </div>
+
+
+      <!-- ======================================
+           PIC
+      ======================================= -->
+
+      <div class="section">
+
+        <div class="section-title">
+          👷 PIC
+        </div>
+
+
+        <!-- PIC 1 -->
+
+        <div class="pic-box">
+
+          <div class="pic-title">
+            PIC 1
+          </div>
+
+
+          <label for="nik1">
+            NIK
+          </label>
+
+          <input
+            type="text"
+            id="nik1"
+            name="nik1"
+            inputmode="numeric"
+            maxlength="10"
+            placeholder="Masukkan NIK"
+            required
+          >
+
+
+          <label for="nama1">
+            Nama
+          </label>
+
+          <input
+            type="text"
+            id="nama1"
+            name="nama1"
+            class="employee-name"
+            placeholder="Nama akan muncul otomatis"
+            readonly
+          >
+
+          <div
+            id="nikStatus1"
+            class="employee-status">
+          </div>
+
+        </div>
+
+
+        <!-- PIC 2 -->
+
+        <div class="pic-box">
+
+          <div class="pic-title">
+
+            PIC 2
+
+            <span style="font-weight:400;">
+              (Opsional)
+            </span>
+
+          </div>
+
+
+          <label for="nik2">
+            NIK
+          </label>
+
+          <input
+            type="text"
+            id="nik2"
+            name="nik2"
+            inputmode="numeric"
+            maxlength="10"
+            placeholder="Masukkan NIK"
+          >
+
+
+          <label for="nama2">
+            Nama
+          </label>
+
+          <input
+            type="text"
+            id="nama2"
+            name="nama2"
+            class="employee-name"
+            placeholder="Nama akan muncul otomatis"
+            readonly
+          >
+
+          <div
+            id="nikStatus2"
+            class="employee-status">
+          </div>
+
+        </div>
+
+
+        <!-- PIC 3 -->
+
+        <div class="pic-box">
+
+          <div class="pic-title">
+
+            PIC 3
+
+            <span style="font-weight:400;">
+              (Opsional)
+            </span>
+
+          </div>
+
+
+          <label for="nik3">
+            NIK
+          </label>
+
+          <input
+            type="text"
+            id="nik3"
+            name="nik3"
+            inputmode="numeric"
+            maxlength="10"
+            placeholder="Masukkan NIK"
+          >
+
+
+          <label for="nama3">
+            Nama
+          </label>
+
+          <input
+            type="text"
+            id="nama3"
+            name="nama3"
+            class="employee-name"
+            placeholder="Nama akan muncul otomatis"
+            readonly
+          >
+
+          <div
+            id="nikStatus3"
+            class="employee-status">
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ======================================
+           PEKERJAAN
+      ======================================= -->
+
+      <div class="section">
+
+        <div class="section-title">
+          🔧 PEKERJAAN / AKTIVITAS
+        </div>
+
+
+        <label for="pekerjaan">
+          Pekerjaan / Aktivitas
+        </label>
+
+
+        <select
+          id="pekerjaan"
+          name="pekerjaan"
+          required
+        >
+
+          <option value="" disabled selected>
+            Pilih jenis pekerjaan
+          </option>
+
+          <option value="Preventive">
+            Preventive
+          </option>
+
+          <option value="Perbaikan">
+            Perbaikan
+          </option>
+
+          <option value="LAINNYA">
+            Lainnya
+          </option>
+
+        </select>
+
+
+        <input
+          type="text"
+          id="pekerjaanOther"
+          name="pekerjaanOther"
+          placeholder="Masukkan pekerjaan / aktivitas..."
+          style="display:none;"
+        >
+
+      </div>
+
+
+      <!-- ======================================
+           ID MESIN
+      ======================================= -->
+
+      <div class="section">
+
+        <div class="section-title">
+
+          ⚙️ ID MESIN
+
+          <span class="optional-text">
+            (Opsional)
+          </span>
+
+        </div>
+
+
+        <label for="idMesin">
+          ID Mesin
+        </label>
+
+
+        <div class="machine-input-wrapper">
+
+          <input
+            type="text"
+            id="idMesin"
+            name="idMesin"
+            placeholder="Ketik ID Mesin atau scan barcode"
+            autocomplete="off"
+          >
+
+
+          <button
+            type="button"
+            class="scan-button"
+            id="scanButton"
+          >
+            📷 SCAN BARCODE
+          </button>
+
+        </div>
+
+
+        <div class="machine-info">
+
+          Kosongkan jika pekerjaan tidak berkaitan
+          dengan mesin tertentu.
+
+        </div>
+
+
+        <!-- Scanner -->
+
+        <div
+          class="scanner-container"
+          id="scannerContainer"
+        >
+
+          <div class="scanner-title">
+            Arahkan kamera ke barcode / QR Code
+          </div>
+
+
+          <div id="reader"></div>
+
+
+          <button
+            type="button"
+            class="close-scanner-button"
+            id="closeScannerButton"
+          >
+            ✕ TUTUP SCANNER
+          </button>
+
+        </div>
+
+
+        <!-- Scan Result -->
+
+        <div
+          class="scan-result"
+          id="scanResult"
+        >
+
+          ✓ Barcode berhasil dibaca:
+
+          <strong id="scanResultText"></strong>
+
+        </div>
+
+      </div>
+
+
+      <!-- ======================================
+           WAKTU
+      ======================================= -->
+
+      <div class="section">
+
+        <div class="section-title">
+          ⏱ WAKTU PEKERJAAN
+        </div>
+
+
+        <div class="time-container">
+
+          <div>
+
+            <label for="mulai">
+              Mulai
+            </label>
+
+            <input
+              type="time"
+              id="mulai"
+              name="mulai"
+              required
+            >
+
+          </div>
+
+
+          <div>
+
+            <label for="selesai">
+              Selesai
+            </label>
+
+            <input
+              type="time"
+              id="selesai"
+              name="selesai"
+              required
+            >
+
+          </div>
+
+        </div>
+
+
+        <div class="duration-box">
+
+          Durasi:
+
+          <span id="durasi">
+            -
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- ======================================
+           FOTO SEBELUM
+      ======================================= -->
+
+      <div class="section">
+
+        <div class="section-title">
+          📷 FOTO / DOKUMENTASI
+        </div>
+
+
+        <div class="photo-box">
+
+          <div class="photo-box-title">
+            📷 Foto Sebelum
+          </div>
+
+
+          <!-- Kamera -->
+
+          <input
+            type="file"
+            id="kameraSebelum"
+            class="hidden-file-input"
+            accept="image/*"
+            capture="environment"
+          >
+
+
+          <!-- Galeri -->
+
+          <input
+            type="file"
+            id="galeriSebelum"
+            class="hidden-file-input"
+            accept="image/*"
+          >
+
+
+          <div class="photo-button-container">
+
+            <button
+              type="button"
+              class="camera-button"
+              id="btnKameraSebelum"
+            >
+              📷 AMBIL DENGAN KAMERA
+            </button>
+
+
+            <button
+              type="button"
+              class="gallery-button"
+              id="btnGaleriSebelum"
+            >
+              🖼️ PILIH DARI GALERI
+            </button>
+
+          </div>
+
+
+          <div
+            class="photo-name"
+            id="namaFotoSebelum"
+          >
+            Belum ada foto dipilih
+          </div>
+
+
+          <img
+            id="previewSebelum"
+            class="photo-preview"
+            alt="Preview foto sebelum"
+          >
+
+        </div>
+
+
+        <!-- ======================================
+             FOTO SESUDAH
+        ======================================= -->
+
+        <div class="photo-box">
+
+          <div class="photo-box-title">
+            📷 Foto Sesudah
+          </div>
+
+
+          <!-- Kamera -->
+
+          <input
+            type="file"
+            id="kameraSesudah"
+            class="hidden-file-input"
+            accept="image/*"
+            capture="environment"
+          >
+
+
+          <!-- Galeri -->
+
+          <input
+            type="file"
+            id="galeriSesudah"
+            class="hidden-file-input"
+            accept="image/*"
+          >
+
+
+          <div class="photo-button-container">
+
+            <button
+              type="button"
+              class="camera-button"
+              id="btnKameraSesudah"
+            >
+              📷 AMBIL DENGAN KAMERA
+            </button>
+
+
+            <button
+              type="button"
+              class="gallery-button"
+              id="btnGaleriSesudah"
+            >
+              🖼️ PILIH DARI GALERI
+            </button>
+
+          </div>
+
+
+          <div
+            class="photo-name"
+            id="namaFotoSesudah"
+          >
+            Belum ada foto dipilih
+          </div>
+
+
+          <img
+            id="previewSesudah"
+            class="photo-preview"
+            alt="Preview foto sesudah"
+          >
+
+        </div>
+
+      </div>
+
+
+      <!-- ======================================
+           SUBMIT
+      ======================================= -->
+
+      <button
+        type="submit"
+        class="submit-button"
+        id="submitButton"
+      >
+        KIRIM LAPORAN
+      </button>
+
+
+    </form>
+
+  </div>
+
+
+  <!-- ==========================================
+       JAVASCRIPT
+  ========================================== -->
+
+  <script>
+
+    /* ============================================================
+       SUPABASE CONNECTION
+    ============================================================ */
+
+    const SUPABASE_URL =
+      "https://ngzozvuzflstatqpqfwp.supabase.co";
+
+    const SUPABASE_KEY =
+      "sb_publishable_y6xzWLcwJ__0imKfvVKkBw_7FRWUuTo";
+
+    const supabaseClient =
+      supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+      );
+
+
+    /* ============================================================
+       ELEMENT
+    ============================================================ */
+
+    const form =
+      document.getElementById("workForm");
+
+    const submitButton =
+      document.getElementById("submitButton");
+
+    const statusBox =
+      document.getElementById("statusBox");
+
+
+    /* ============================================================
+       STATUS
+    ============================================================ */
+
+    function showStatus(message, type) {
+
+      statusBox.textContent = message;
+
+      statusBox.className =
+        "status-box status-" + type;
+
+    }
+
+
+    function clearStatus() {
+
+      statusBox.textContent = "";
+
+      statusBox.className =
+        "status-box";
+
+    }
+
+
+    /* ============================================================
+       TANGGAL DEFAULT = HARI INI
+    ============================================================ */
+
+    const tanggalInput =
+      document.getElementById("tanggal");
+
+
+    function getLocalDateString() {
+
+      const now =
+        new Date();
+
+      const year =
+        now.getFullYear();
+
+      const month =
+        String(
+          now.getMonth() + 1
+        ).padStart(2, "0");
+
+      const day =
+        String(
+          now.getDate()
+        ).padStart(2, "0");
+
+      return `${year}-${month}-${day}`;
+
+    }
+
+
+    tanggalInput.value =
+      getLocalDateString();
+
+
+    /* ============================================================
+       UPPERCASE
+    ============================================================ */
+
+    document
+      .querySelectorAll(
+        'input[type="text"], textarea'
+      )
+      .forEach(input => {
+
+        input.addEventListener(
+          "input",
+          function() {
+
+            this.value =
+              this.value.toUpperCase();
+
+          }
+        );
+
+      });
+
+
+    /* ============================================================
+       FACTORY - LAINNYA
+    ============================================================ */
+
+    const factorySelect =
+      document.getElementById("factory");
+
+    const factoryOther =
+      document.getElementById("factoryOther");
+
+
+    factorySelect.addEventListener(
+      "change",
+      function() {
+
+        if (this.value === "LAINNYA") {
+
+          factoryOther.style.display =
+            "block";
+
+          factoryOther.required =
+            true;
+
+        } else {
+
+          factoryOther.style.display =
+            "none";
+
+          factoryOther.required =
+            false;
+
+          factoryOther.value =
+            "";
+
+        }
+
+      }
+    );
+
+
+    /* ============================================================
+       AREA - LAINNYA
+    ============================================================ */
+
+    const areaSelect =
+      document.getElementById("area");
+
+    const areaOther =
+      document.getElementById("areaOther");
+
+
+    areaSelect.addEventListener(
+      "change",
+      function() {
+
+        if (this.value === "LAINNYA") {
+
+          areaOther.style.display =
+            "block";
+
+          areaOther.required =
+            true;
+
+        } else {
+
+          areaOther.style.display =
+            "none";
+
+          areaOther.required =
+            false;
+
+          areaOther.value =
+            "";
+
+        }
+
+      }
+    );
+
+
+    /* ============================================================
+       LINE - LAINNYA
+    ============================================================ */
+
+    const lineSelect =
+      document.getElementById("line");
+
+    const lineOther =
+      document.getElementById("lineOther");
+
+
+    lineSelect.addEventListener(
+      "change",
+      function() {
+
+        if (this.value === "LAINNYA") {
+
+          lineOther.style.display =
+            "block";
+
+          lineOther.required =
+            true;
+
+        } else {
+
+          lineOther.style.display =
+            "none";
+
+          lineOther.required =
+            false;
+
+          lineOther.value =
+            "";
+
+        }
+
+      }
+    );
+
+
+    /* ============================================================
+       PEKERJAAN - LAINNYA
+    ============================================================ */
+
+    const pekerjaanSelect =
+      document.getElementById("pekerjaan");
+
+    const pekerjaanOther =
+      document.getElementById("pekerjaanOther");
+
+
+    pekerjaanSelect.addEventListener(
+      "change",
+      function() {
+
+        if (this.value === "LAINNYA") {
+
+          pekerjaanOther.style.display =
+            "block";
+
+          pekerjaanOther.required =
+            true;
+
+        } else {
+
+          pekerjaanOther.style.display =
+            "none";
+
+          pekerjaanOther.required =
+            false;
+
+          pekerjaanOther.value =
+            "";
+
+        }
+
+      }
+    );
+
+
+    /* ============================================================
+       CEK NIK KE SUPABASE
+    ============================================================ */
+
+    const nikCache = {};
+
+
+    async function cekNik(
+      nikId,
+      namaId,
+      statusId
+    ) {
+
+      const nikInput =
+        document.getElementById(nikId);
+
+      const namaInput =
+        document.getElementById(namaId);
+
+      const status =
+        document.getElementById(statusId);
+
+
+      const nik =
+        nikInput.value.trim();
+
+
+      namaInput.value =
+        "";
+
+      status.textContent =
+        "";
+
+      status.className =
+        "employee-status";
+
+
+      if (!nik) {
+
+        return null;
+
+      }
+
+
+      /*
+        Jika NIK sudah pernah dicari,
+        gunakan cache agar tidak query berulang.
+      */
+
+      if (nikCache[nik]) {
+
+        namaInput.value =
+          nikCache[nik];
+
+        status.textContent =
+          "✓ NIK ditemukan";
+
+        status.className =
+          "employee-status status-success";
+
+        return nikCache[nik];
+
+      }
+
+
+      status.textContent =
+        "Mencari NIK...";
+
+
+      try {
+
+        const {
+          data,
+          error
+        } = await supabaseClient
+          .from("Karyawan")
+          .select("nik, nama")
+          .eq("nik", nik)
+          .maybeSingle();
+
+
+        if (error) {
+
+          console.error(
+            "Error mencari NIK:",
+            error
+          );
+
+          status.textContent =
+            "Gagal menghubungi database.";
+
+          status.className =
+            "employee-status status-error";
+
+          return null;
+
+        }
+
+
+        if (data) {
+
+          nikCache[nik] =
+            data.nama;
+
+          namaInput.value =
+            data.nama;
+
+          status.textContent =
+            "✓ NIK ditemukan";
+
+          status.className =
+            "employee-status status-success";
+
+          return data.nama;
+
+        }
+
+
+        status.textContent =
+          "✕ NIK tidak ditemukan.";
+
+        status.className =
+          "employee-status status-error";
+
+        return null;
+
+      }
+
+      catch (error) {
+
+        console.error(
+          "Error koneksi Supabase:",
+          error
+        );
+
+        status.textContent =
+          "Gagal terhubung ke database.";
+
+        status.className =
+          "employee-status status-error";
+
+        return null;
+
+      }
+
+    }
+
+
+    /* ============================================================
+       EVENT NIK
+    ============================================================ */
+
+    document
+      .getElementById("nik1")
+      .addEventListener(
+        "blur",
+        () => {
+
+          cekNik(
+            "nik1",
+            "nama1",
+            "nikStatus1"
+          );
+
+        }
+      );
+
+
+    document
+      .getElementById("nik2")
+      .addEventListener(
+        "blur",
+        () => {
+
+          cekNik(
+            "nik2",
+            "nama2",
+            "nikStatus2"
+          );
+
+        }
+      );
+
+
+    document
+      .getElementById("nik3")
+      .addEventListener(
+        "blur",
+        () => {
+
+          cekNik(
+            "nik3",
+            "nama3",
+            "nikStatus3"
+          );
+
+        }
+      );
+
+
+    /* ============================================================
+       DURASI
+    ============================================================ */
+
+    function calculateDuration() {
+
+      const mulai =
+        document.getElementById("mulai").value;
+
+      const selesai =
+        document.getElementById("selesai").value;
+
+
+      if (!mulai || !selesai) {
+
+        document.getElementById(
+          "durasi"
+        ).textContent = "-";
+
+        return null;
+
+      }
+
+
+      const [
+        startHour,
+        startMinute
+      ] =
+        mulai
+          .split(":")
+          .map(Number);
+
+
+      const [
+        endHour,
+        endMinute
+      ] =
+        selesai
+          .split(":")
+          .map(Number);
+
+
+      const start =
+        startHour * 60 +
+        startMinute;
+
+
+      const end =
+        endHour * 60 +
+        endMinute;
+
+
+      if (end <= start) {
+
+        document.getElementById(
+          "durasi"
+        ).textContent =
+          "Waktu tidak valid";
+
+        return null;
+
+      }
+
+
+      const duration =
+        end - start;
+
+
+      const hours =
+        Math.floor(
+          duration / 60
+        );
+
+
+      const minutes =
+        duration % 60;
+
+
+      let result = "";
+
+
+      if (hours > 0) {
+
+        result +=
+          `${hours} Jam`;
+
+      }
+
+
+      if (minutes > 0) {
+
+        if (result !== "") {
+
+          result += " ";
+
+        }
+
+        result +=
+          `${minutes} Menit`;
+
+      }
+
+
+      if (!result) {
+
+        result =
+          "0 Menit";
+
+      }
+
+
+      document.getElementById(
+        "durasi"
+      ).textContent =
+        result;
+
+
+      return duration;
+
+    }
+
+
+    document
+      .getElementById("mulai")
+      .addEventListener(
+        "change",
+        calculateDuration
+      );
+
+
+    document
+      .getElementById("selesai")
+      .addEventListener(
+        "change",
+        calculateDuration
+      );
+
+
+    /* ============================================================
+       FOTO
+    ============================================================ */
+
+    let fotoSebelumFile =
+      null;
+
+    let fotoSesudahFile =
+      null;
+
+
+    /* ============================================================
+       PREVIEW FOTO
+    ============================================================ */
+
+    function tampilkanPreview(
+      file,
+      previewId,
+      namaId
+    ) {
+
+      const preview =
+        document.getElementById(
+          previewId
+        );
+
+      const nama =
+        document.getElementById(
+          namaId
+        );
+
+
+      if (!file) {
+
+        preview.style.display =
+          "none";
+
+        preview.src =
+          "";
+
+        nama.textContent =
+          "Belum ada foto dipilih";
+
+        return;
+
+      }
+
+
+      if (!file.type.startsWith("image/")) {
+
+        alert(
+          "File harus berupa gambar."
+        );
+
+        return;
+
+      }
+
+
+      nama.textContent =
+        file.name;
+
+
+      const reader =
+        new FileReader();
+
+
+      reader.onload =
+        function(event) {
+
+          preview.src =
+            event.target.result;
+
+          preview.style.display =
+            "block";
+
+        };
+
+
+      reader.readAsDataURL(file);
+
+    }
+
+
+    /* ============================================================
+       KAMERA / GALERI FOTO SEBELUM
+    ============================================================ */
+
+    document
+      .getElementById("btnKameraSebelum")
+      .addEventListener(
+        "click",
+        function() {
+
+          document
+            .getElementById(
+              "kameraSebelum"
+            )
+            .click();
+
+        }
+      );
+
+
+    document
+      .getElementById("btnGaleriSebelum")
+      .addEventListener(
+        "click",
+        function() {
+
+          document
+            .getElementById(
+              "galeriSebelum"
+            )
+            .click();
+
+        }
+      );
+
+
+    document
+      .getElementById("kameraSebelum")
+      .addEventListener(
+        "change",
+        function() {
+
+          if (this.files.length > 0) {
+
+            fotoSebelumFile =
+              this.files[0];
+
+            tampilkanPreview(
+              fotoSebelumFile,
+              "previewSebelum",
+              "namaFotoSebelum"
+            );
+
+          }
+
+        }
+      );
+
+
+    document
+      .getElementById("galeriSebelum")
+      .addEventListener(
+        "change",
+        function() {
+
+          if (this.files.length > 0) {
+
+            fotoSebelumFile =
+              this.files[0];
+
+            tampilkanPreview(
+              fotoSebelumFile,
+              "previewSebelum",
+              "namaFotoSebelum"
+            );
+
+          }
+
+        }
+      );
+
+
+    /* ============================================================
+       KAMERA / GALERI FOTO SESUDAH
+    ============================================================ */
+
+    document
+      .getElementById("btnKameraSesudah")
+      .addEventListener(
+        "click",
+        function() {
+
+          document
+            .getElementById(
+              "kameraSesudah"
+            )
+            .click();
+
+        }
+      );
+
+
+    document
+      .getElementById("btnGaleriSesudah")
+      .addEventListener(
+        "click",
+        function() {
+
+          document
+            .getElementById(
+              "galeriSesudah"
+            )
+            .click();
+
+        }
+      );
+
+
+    document
+      .getElementById("kameraSesudah")
+      .addEventListener(
+        "change",
+        function() {
+
+          if (this.files.length > 0) {
+
+            fotoSesudahFile =
+              this.files[0];
+
+            tampilkanPreview(
+              fotoSesudahFile,
+              "previewSesudah",
+              "namaFotoSesudah"
+            );
+
+          }
+
+        }
+      );
+
+
+    document
+      .getElementById("galeriSesudah")
+      .addEventListener(
+        "change",
+        function() {
+
+          if (this.files.length > 0) {
+
+            fotoSesudahFile =
+              this.files[0];
+
+            tampilkanPreview(
+              fotoSesudahFile,
+              "previewSesudah",
+              "namaFotoSesudah"
+            );
+
+          }
+
+        }
+      );
+
+
+    /* ============================================================
+       BARCODE / QR SCANNER
+    ============================================================ */
+
+    let html5QrCode =
+      null;
+
+    let scannerRunning =
+      false;
+
+
+    const scanButton =
+      document.getElementById(
+        "scanButton"
+      );
+
+
+    const scannerContainer =
+      document.getElementById(
+        "scannerContainer"
+      );
+
+
+    const closeScannerButton =
+      document.getElementById(
+        "closeScannerButton"
+      );
+
+
+    const idMesinInput =
+      document.getElementById(
+        "idMesin"
+      );
+
+
+    const scanResult =
+      document.getElementById(
+        "scanResult"
+      );
+
+
+    const scanResultText =
+      document.getElementById(
+        "scanResultText"
+      );
+
+
+    /* ============================================================
+       BUKA SCANNER
+    ============================================================ */
+
+    scanButton.addEventListener(
+      "click",
+      async function() {
+
+        scannerContainer.style.display =
+          "block";
+
+        scanResult.style.display =
+          "none";
+
+        scanButton.disabled =
+          true;
+
+
+        try {
+
+          html5QrCode =
+            new Html5Qrcode(
+              "reader"
+            );
+
+
+          const config = {
+
+            fps: 10,
+
+            qrbox: {
+              width: 250,
+              height: 150
+            },
+
+            aspectRatio: 1.777778
+
+          };
+
+
+          await html5QrCode.start(
+
+            {
+              facingMode:
+                "environment"
+            },
+
+            config,
+
+            onScanSuccess,
+
+            onScanFailure
+
+          );
+
+
+          scannerRunning =
+            true;
+
+        }
+
+        catch (error) {
+
+          console.error(
+            "Scanner Error:",
+            error
+          );
+
+
+          alert(
+            "Kamera tidak dapat dibuka.\n\n" +
+            "Pastikan browser memiliki izin menggunakan kamera."
+          );
+
+
+          scannerContainer.style.display =
+            "none";
+
+          scanButton.disabled =
+            false;
+
+        }
+
+      }
+    );
+
+
+    /* ============================================================
+       BERHASIL SCAN
+    ============================================================ */
+
+    async function onScanSuccess(
+      decodedText,
+      decodedResult
+    ) {
+
+      console.log(
+        "Barcode:",
+        decodedText
+      );
+
+
+      idMesinInput.value =
+        decodedText.toUpperCase();
+
+
+      scanResultText.textContent =
+        decodedText;
+
+
+      scanResult.style.display =
+        "block";
+
+
+      await stopScanner();
+
+    }
+
+
+    /* ============================================================
+       SCAN GAGAL
+    ============================================================ */
+
+    function onScanFailure(
+      errorMessage
+    ) {
+
+      // Scanner tetap berjalan.
+
+    }
+
+
+    /* ============================================================
+       TUTUP SCANNER
+    ============================================================ */
+
+    closeScannerButton.addEventListener(
+      "click",
+      async function() {
+
+        await stopScanner();
+
+      }
+    );
+
+
+    /* ============================================================
+       STOP SCANNER
+    ============================================================ */
+
+    async function stopScanner() {
+
+      if (
+        html5QrCode &&
+        scannerRunning
+      ) {
+
+        try {
+
+          await html5QrCode.stop();
+
+          html5QrCode.clear();
+
+        }
+
+        catch (error) {
+
+          console.error(
+            "Gagal menghentikan scanner:",
+            error
+          );
+
+        }
+
+      }
+
+
+      scannerRunning =
+        false;
+
+
+      scannerContainer.style.display =
+        "none";
+
+
+      scanButton.disabled =
+        false;
+
+    }
+
+
+    /* ============================================================
+       FOLDER ID
+       
+       FORMAT:
+       DDMMYYYYHHmm
+
+       Contoh:
+       280820261436
+    ============================================================ */
+
+    function generateFolderId() {
+
+      const now =
+        new Date();
+
+
+      const day =
+        String(
+          now.getDate()
+        ).padStart(2, "0");
+
+
+      const month =
+        String(
+          now.getMonth() + 1
+        ).padStart(2, "0");
+
+
+      const year =
+        now.getFullYear();
+
+
+      const hour =
+        String(
+          now.getHours()
+        ).padStart(2, "0");
+
+
+      const minute =
+        String(
+          now.getMinutes()
+        ).padStart(2, "0");
+
+
+      return (
+        `${day}${month}${year}${hour}${minute}`
+      );
+
+    }
+
+
+    /* ============================================================
+       TIMESTAMP CREATED_AT
+       
+       Menggunakan waktu lokal Indonesia
+       dengan timezone +07:00
+    ============================================================ */
+
+    function generateCreatedAt() {
+
+      const now =
+        new Date();
+
+
+      const year =
+        now.getFullYear();
+
+
+      const month =
+        String(
+          now.getMonth() + 1
+        ).padStart(2, "0");
+
+
+      const day =
+        String(
+          now.getDate()
+        ).padStart(2, "0");
+
+
+      const hour =
+        String(
+          now.getHours()
+        ).padStart(2, "0");
+
+
+      const minute =
+        String(
+          now.getMinutes()
+        ).padStart(2, "0");
+
+
+      const second =
+        String(
+          now.getSeconds()
+        ).padStart(2, "0");
+
+
+      return (
+        `${year}-${month}-${day}` +
+        `T${hour}:${minute}:${second}+07:00`
+      );
+
+    }
+
+
+    /* ============================================================
+       EXTENSION FILE
+    ============================================================ */
+
+    function getFileExtension(file) {
+
+      if (!file) {
+
+        return "jpg";
+
+      }
+
+
+      const extension =
+        file.name
+          .split(".")
+          .pop()
+          .toLowerCase();
+
+
+      if (
+        extension === "jpeg" ||
+        extension === "jpg" ||
+        extension === "png" ||
+        extension === "webp"
+      ) {
+
+        return extension;
+
+      }
+
+
+      return "jpg";
+
+    }
+
+
+    /* ============================================================
+       UPLOAD FOTO KE SUPABASE STORAGE
+    ============================================================ */
+
+    async function uploadPhoto(
+      file,
+      folderId,
+      prefix
+    ) {
+
+      if (!file) {
+
+        return null;
+
+      }
+
+
+      const extension =
+        getFileExtension(file);
+
+
+      const filePath =
+        `${folderId}/${prefix}.${extension}`;
+
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient
+          .storage
+          .from("laporan-kerja")
+          .upload(
+            filePath,
+            file,
+            {
+              upsert: false,
+              contentType: file.type
+            }
+          );
+
+
+      if (error) {
+
+        console.error(
+          "Upload foto gagal:",
+          error
+        );
+
+        throw error;
+
+      }
+
+
+      console.log(
+        "Foto berhasil diupload:",
+        data
+      );
+
+
+      return filePath;
+
+    }
+
+
+    /* ============================================================
+       RESET FOTO
+    ============================================================ */
+
+    function resetPhotos() {
+
+      fotoSebelumFile =
+        null;
+
+      fotoSesudahFile =
+        null;
+
+
+      document
+        .getElementById(
+          "kameraSebelum"
+        )
+        .value =
+        "";
+
+      document
+        .getElementById(
+          "galeriSebelum"
+        )
+        .value =
+        "";
+
+
+      document
+        .getElementById(
+          "kameraSesudah"
+        )
+        .value =
+        "";
+
+      document
+        .getElementById(
+          "galeriSesudah"
+        )
+        .value =
+        "";
+
+
+      document
+        .getElementById(
+          "previewSebelum"
+        )
+        .style.display =
+        "none";
+
+
+      document
+        .getElementById(
+          "previewSebelum"
+        )
+        .src =
+        "";
+
+
+      document
+        .getElementById(
+          "previewSesudah"
+        )
+        .style.display =
+        "none";
+
+
+      document
+        .getElementById(
+          "previewSesudah"
+        )
+        .src =
+        "";
+
+
+      document
+        .getElementById(
+          "namaFotoSebelum"
+        )
+        .textContent =
+        "Belum ada foto dipilih";
+
+
+      document
+        .getElementById(
+          "namaFotoSesudah"
+        )
+        .textContent =
+        "Belum ada foto dipilih";
+
+    }
+
+
+    /* ============================================================
+       RESET FORM
+    ============================================================ */
+
+    function resetForm() {
+
+      form.reset();
+
+
+      document
+        .getElementById(
+          "factoryOther"
+        )
+        .style.display =
+        "none";
+
+
+      document
+        .getElementById(
+          "areaOther"
+        )
+        .style.display =
+        "none";
+
+
+      document
+        .getElementById(
+          "lineOther"
+        )
+        .style.display =
+        "none";
+
+
+      document
+        .getElementById(
+          "pekerjaanOther"
+        )
+        .style.display =
+        "none";
+
+
+      document
+        .getElementById(
+          "factoryOther"
+        )
+        .required =
+        false;
+
+
+      document
+        .getElementById(
+          "areaOther"
+        )
+        .required =
+        false;
+
+
+      document
+        .getElementById(
+          "lineOther"
+        )
+        .required =
+        false;
+
+
+      document
+        .getElementById(
+          "pekerjaanOther"
+        )
+        .required =
+        false;
+
+
+      document
+        .getElementById(
+          "nikStatus1"
+        )
+        .textContent =
+        "";
+
+
+      document
+        .getElementById(
+          "nikStatus2"
+        )
+        .textContent =
+        "";
+
+
+      document
+        .getElementById(
+          "nikStatus3"
+        )
+        .textContent =
+        "";
+
+
+      document
+        .getElementById(
+          "durasi"
+        )
+        .textContent =
+        "-";
+
+
+      document
+        .getElementById(
+          "scanResult"
+        )
+        .style.display =
+        "none";
+
+
+      resetPhotos();
+
+
+      tanggalInput.value =
+        getLocalDateString();
+
+    }
+
+
+    /* ============================================================
+       SUBMIT FORM
+    ============================================================ */
+
+    form.addEventListener(
+      "submit",
+      async function(e) {
+
+        e.preventDefault();
+
+
+        if (submitButton.disabled) {
+
+          return;
+
+        }
+
+
+        clearStatus();
+
+
+        /* ========================================
+           VALIDASI FACTORY
+        ======================================== */
+
+        let factory =
+          factorySelect.value;
+
+
+        if (factory === "LAINNYA") {
+
+          factory =
+            factoryOther.value.trim();
+
+
+          if (!factory) {
+
+            alert(
+              "Silakan masukkan nama Factory."
+            );
+
+            factoryOther.focus();
+
+            return;
+
+          }
+
+        }
+
+
+        /* ========================================
+           VALIDASI AREA
+        ======================================== */
+
+        let area =
+          areaSelect.value;
+
+
+        if (area === "LAINNYA") {
+
+          area =
+            areaOther.value.trim();
+
+
+          if (!area) {
+
+            alert(
+              "Silakan masukkan nama Area."
+            );
+
+            areaOther.focus();
+
+            return;
+
+          }
+
+        }
+
+
+        /* ========================================
+           VALIDASI LINE
+        ======================================== */
+
+        let line =
+          lineSelect.value;
+
+
+        if (line === "LAINNYA") {
+
+          line =
+            lineOther.value.trim();
+
+
+          if (!line) {
+
+            alert(
+              "Silakan masukkan Line."
+            );
+
+            lineOther.focus();
+
+            return;
+
+          }
+
+        }
+
+
+        /* ========================================
+           VALIDASI PEKERJAAN
+        ======================================== */
+
+        let pekerjaan =
+          pekerjaanSelect.value;
+
+
+        if (pekerjaan === "LAINNYA") {
+
+          pekerjaan =
+            pekerjaanOther.value.trim();
+
+
+          if (!pekerjaan) {
+
+            alert(
+              "Silakan masukkan pekerjaan / aktivitas."
+            );
+
+            pekerjaanOther.focus();
+
+            return;
+
+          }
+
+        }
+
+
+        /* ========================================
+           VALIDASI PIC 1
+        ======================================== */
+
+        const nik1 =
+          document
+            .getElementById("nik1")
+            .value
+            .trim();
+
+
+        const nama1 =
+          document
+            .getElementById("nama1")
+            .value
+            .trim();
+
+
+        if (!nik1) {
+
+          alert(
+            "NIK PIC 1 wajib diisi."
+          );
+
+          return;
+
+        }
+
+
+        if (!nama1) {
+
+          alert(
+            "NIK PIC 1 tidak ditemukan di database."
+          );
+
+          return;
+
+        }
+
+
+        /* ========================================
+           VALIDASI PIC 2
+        ======================================== */
+
+        const nik2 =
+          document
+            .getElementById("nik2")
+            .value
+            .trim();
+
+
+        const nama2 =
+          document
+            .getElementById("nama2")
+            .value
+            .trim();
+
+
+        if (
+          nik2 &&
+          !nama2
+        ) {
+
+          alert(
+            "NIK PIC 2 tidak ditemukan di database."
+          );
+
+          return;
+
+        }
+
+
+        /* ========================================
+           VALIDASI PIC 3
+        ======================================== */
+
+        const nik3 =
+          document
+            .getElementById("nik3")
+            .value
+            .trim();
+
+
+        const nama3 =
+          document
+            .getElementById("nama3")
+            .value
+            .trim();
+
+
+        if (
+          nik3 &&
+          !nama3
+        ) {
+
+          alert(
+            "NIK PIC 3 tidak ditemukan di database."
+          );
+
+          return;
+
+        }
+
+
+        /* ========================================
+           VALIDASI WAKTU
+        ======================================== */
+
+        const mulai =
+          document
+            .getElementById("mulai")
+            .value;
+
+
+        const selesai =
+          document
+            .getElementById("selesai")
+            .value;
+
+
+        const durasi =
+          calculateDuration();
+
+
+        if (durasi === null) {
+
+          alert(
+            "Waktu selesai harus lebih besar dari waktu mulai."
+          );
+
+          return;
+
+        }
+
+
+        /* ========================================
+           FOTO
+        ======================================== */
+
+        if (!fotoSebelumFile) {
+
+          alert(
+            "Foto Sebelum wajib dipilih."
+          );
+
+          return;
+
+        }
+
+
+        if (!fotoSesudahFile) {
+
+          alert(
+            "Foto Sesudah wajib dipilih."
+          );
+
+          return;
+
+        }
+
+
+        /* ========================================
+           ID MESIN OPSIONAL
+        ======================================== */
+
+        const idMesin =
+          document
+            .getElementById("idMesin")
+            .value
+            .trim();
+
+
+        /* ========================================
+           TANGGAL
+        ======================================== */
+
+        const tanggal =
+          tanggalInput.value;
+
+
+        /* ========================================
+           FOLDER ID
+           
+           Contoh:
+           280820261436
+        ======================================== */
+
+        const folderId =
+          generateFolderId();
+
+
+        /* ========================================
+           CREATED AT
+        ======================================== */
+
+        const createdAt =
+          generateCreatedAt();
+
+
+        /* ========================================
+           DISABLE BUTTON
+        ======================================== */
+
+        submitButton.disabled =
+          true;
+
+        submitButton.textContent =
+          "MENGIRIM...";
+
+
+        try {
+
+          /* ======================================
+             UPLOAD FOTO SEBELUM
+          ====================================== */
+
+          showStatus(
+            "Mengupload Foto Sebelum...",
+            "loading"
+          );
+
+
+          const fotoSebelumPath =
+            await uploadPhoto(
+              fotoSebelumFile,
+              folderId,
+              "before"
+            );
+
+
+          /* ======================================
+             UPLOAD FOTO SESUDAH
+          ====================================== */
+
+          showStatus(
+            "Mengupload Foto Sesudah...",
+            "loading"
+          );
+
+
+          const fotoSesudahPath =
+            await uploadPhoto(
+              fotoSesudahFile,
+              folderId,
+              "after"
+            );
+
+
+          /* ======================================
+             SIMPAN KE DATABASE
+          ====================================== */
+
+          showStatus(
+            "Menyimpan laporan...",
+            "loading"
+          );
+
+
+          const {
+            data,
+            error
+          } =
+            await supabaseClient
+              .from("laporan_kerja")
+              .insert([
+                {
+
+                  tanggal:
+                    tanggal,
+
+                  nik1:
+                    nik1,
+
+                  nik2:
+                    nik2 ||
+                    null,
+
+                  nik3:
+                    nik3 ||
+                    null,
+
+                  pekerjaan:
+                    pekerjaan,
+
+                  id_mesin:
+                    idMesin ||
+                    null,
+
+                  mulai:
+                    mulai,
+
+                  selesai:
+                    selesai,
+
+                  durasi:
+                    durasi,
+
+                  foto_sebelum:
+                    fotoSebelumPath,
+
+                  foto_sesudah:
+                    fotoSesudahPath,
+
+                  created_at:
+                    createdAt,
+
+                  factory:
+                    factory,
+
+                  area:
+                    area,
+
+                  line:
+                    line
+
+                }
+              ])
+              .select()
+              .single();
+
+
+          if (error) {
+
+            console.error(
+              "Database Error:",
+              error
+            );
+
+            throw error;
+
+          }
+
+
+          console.log(
+            "Laporan berhasil:",
+            data
+          );
+
+
+          /* ======================================
+             BERHASIL
+          ====================================== */
+
+          showStatus(
+            "✓ Laporan berhasil dikirim.",
+            "success"
+          );
+
+
+          alert(
+            "LAPORAN BERHASIL DIKIRIM\n\n" +
+            "ID Laporan: " +
+            data.id +
+            "\n" +
+            "Folder Foto: " +
+            folderId
+          );
+
+
+          /* ======================================
+             RESET FORM
+          ====================================== */
+
+          resetForm();
+
+        }
+
+        catch (error) {
+
+          console.error(
+            "Error:",
+            error
+          );
+
+
+          showStatus(
+            "Laporan gagal dikirim: " +
+            (error.message || error),
+            "error"
+          );
+
+
+          alert(
+            "LAPORAN GAGAL DIKIRIM\n\n" +
+            (error.message || error)
+          );
+
+        }
+
+        finally {
+
+          submitButton.disabled =
+            false;
+
+          submitButton.textContent =
+            "KIRIM LAPORAN";
+
+        }
+
+      }
+    );
+
+  </script>
+
+</body>
+
+</html>
