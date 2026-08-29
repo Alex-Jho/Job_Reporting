@@ -164,6 +164,12 @@
       margin-top: -8px;
       margin-bottom: 12px;
       min-height: 16px;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .checking {
+      color: #0d6efd;
     }
 
     .status-success {
@@ -172,6 +178,88 @@
 
     .status-error {
       color: #dc3545;
+    }
+
+    /* ============================================================
+      STATUS VISUAL INPUT NIK
+    ============================================================ */
+
+    .nik-checking {
+      border: 2px solid #0d6efd !important;
+    }
+
+    .nik-success {
+      border: 2px solid #198754 !important;
+    }
+
+    .nik-success:focus {
+      border-color: #198754 !important;
+      box-shadow: 0 0 0 2px rgba(25, 135, 84, 0.15);
+    }
+
+    .nik-error {
+      border: 2px solid #dc3545 !important;
+    }
+
+    .nik-error:focus {
+      border-color: #dc3545 !important;
+      box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.15);
+    }
+
+    /* ============================================================
+      PROGRESSIVE DISCLOSURE - PIC
+    ============================================================ */
+
+    .add-pic-button {
+      width: 100%;
+      padding: 12px 16px;
+      margin-top: 10px;
+      margin-bottom: 14px;
+
+      border: 1px dashed #9ca3af;
+      border-radius: 10px;
+
+      background: #f9fafb;
+      color: #374151;
+
+      font-size: 14px;
+      font-weight: 600;
+
+      cursor: pointer;
+
+      transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.1s ease;
+    }
+
+    .add-pic-button:hover {
+      background: #f3f4f6;
+      border-color: #6b7280;
+    }
+
+    .add-pic-button:active {
+      transform: scale(0.99);
+    }
+
+    .remove-pic-button {
+      width: 100%;
+      padding: 10px 14px;
+      margin-top: 8px;
+
+      border: none;
+      background: transparent;
+
+      color: #dc2626;
+
+      font-size: 13px;
+      font-weight: 600;
+
+      cursor: pointer;
+    }
+
+    .remove-pic-button:hover {
+      text-decoration: underline;
     }
 
     /* ==========================================
@@ -423,23 +511,48 @@
     ========================================== */
 
     .submit-button {
+      width: 100%;
+      min-height: 54px;
       background-color: #007bff;
       color: white;
       border: none;
+      border-radius: 10px;
       cursor: pointer;
       font-size: 18px;
       font-weight: 700;
-      padding: 15px;
-      transition: 0.3s;
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: 0.2s ease;
+      box-shadow: 0 3px 8px rgba(0, 123, 255, 0.25);
     }
 
     .submit-button:hover {
       background-color: #0056b3;
+      transform: translateY(-1px);
+    }
+
+    .submit-button:active {
+      transform: translateY(0);
     }
 
     .submit-button:disabled {
       background-color: #999;
       cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+      opacity: 0.8;
+    }
+
+    .submit-icon {
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    .submit-text {
+      line-height: 1;
     }
 
     /* ==========================================
@@ -719,7 +832,9 @@
             name="nik1"
             inputmode="numeric"
             maxlength="6"
-            placeholder="Masukkan NIK"
+            pattern="[0-9]*"
+            placeholder="Ketik NIK"
+            autocomplete="off"
             required
           >
 
@@ -733,7 +848,7 @@
             id="nama1"
             name="nama1"
             class="employee-name"
-            placeholder="Nama akan muncul otomatis"
+            placeholder="Nama karyawan akan muncul otomatis"
             readonly
           >
 
@@ -745,20 +860,30 @@
         </div>
 
 
+        <!-- TOMBOL TAMBAH PIC 2 -->
+
+        <button
+          type="button"
+          id="btnTambahPIC2"
+          class="add-pic-button"
+        >
+          ＋ Tambah PIC 2
+        </button>
+
         <!-- PIC 2 -->
 
-        <div class="pic-box">
+        <div
+          class="pic-box"
+          id="picBox2"
+          style="display:none;"
+        >
 
           <div class="pic-title">
-
             PIC 2
-
             <span style="font-weight:400;">
               (Opsional)
             </span>
-
           </div>
-
 
           <label for="nik2">
             NIK
@@ -769,10 +894,9 @@
             id="nik2"
             name="nik2"
             inputmode="numeric"
-            maxlength="6"
-            placeholder="Masukkan NIK"
+            maxlength="10"
+            placeholder="Ketik NIK"
           >
-
 
           <label for="nama2">
             Nama
@@ -783,7 +907,7 @@
             id="nama2"
             name="nama2"
             class="employee-name"
-            placeholder="Nama akan muncul otomatis"
+            placeholder="Nama karyawan akan muncul otomatis"
             readonly
           >
 
@@ -792,23 +916,42 @@
             class="employee-status">
           </div>
 
+          <button
+            type="button"
+            id="btnHapusPIC2"
+            class="remove-pic-button"
+          >
+            ✕ Hapus PIC 2
+          </button>
+
         </div>
+
+        <!-- TOMBOL TAMBAH PIC 3 -->
+
+        <button
+          type="button"
+          id="btnTambahPIC3"
+          class="add-pic-button"
+          style="display:none;"
+        >
+          ＋ Tambah PIC 3
+        </button>
 
 
         <!-- PIC 3 -->
 
-        <div class="pic-box">
+        <div
+          class="pic-box"
+          id="picBox3"
+          style="display:none;"
+        >
 
           <div class="pic-title">
-
             PIC 3
-
             <span style="font-weight:400;">
               (Opsional)
             </span>
-
           </div>
-
 
           <label for="nik3">
             NIK
@@ -819,10 +962,9 @@
             id="nik3"
             name="nik3"
             inputmode="numeric"
-            maxlength="6"
-            placeholder="Masukkan NIK"
+            maxlength="10"
+            placeholder="Ketik NIK"
           >
-
 
           <label for="nama3">
             Nama
@@ -833,7 +975,7 @@
             id="nama3"
             name="nama3"
             class="employee-name"
-            placeholder="Nama akan muncul otomatis"
+            placeholder="Nama karyawan akan muncul otomatis"
             readonly
           >
 
@@ -842,10 +984,15 @@
             class="employee-status">
           </div>
 
+          <button
+            type="button"
+            id="btnHapusPIC3"
+            class="remove-pic-button"
+          >
+            ✕ Hapus PIC 3
+          </button>
+
         </div>
-
-      </div>
-
 
       <!-- ======================================
            PEKERJAAN
@@ -1063,13 +1210,11 @@
           📷 FOTO / DOKUMENTASI
         </div>
 
-
         <div class="photo-box">
 
           <div class="photo-box-title">
             📷 Foto Sebelum
           </div>
-
 
           <!-- Kamera -->
 
@@ -1081,7 +1226,6 @@
             capture="environment"
           >
 
-
           <!-- Galeri -->
 
           <input
@@ -1090,7 +1234,6 @@
             class="hidden-file-input"
             accept="image/*"
           >
-
 
           <div class="photo-button-container">
 
@@ -1102,7 +1245,6 @@
               📷 AMBIL DENGAN KAMERA
             </button>
 
-
             <button
               type="button"
               class="gallery-button"
@@ -1113,14 +1255,12 @@
 
           </div>
 
-
           <div
             class="photo-name"
             id="namaFotoSebelum"
           >
             Belum ada foto dipilih
           </div>
-
 
           <img
             id="previewSebelum"
@@ -1129,7 +1269,6 @@
           >
 
         </div>
-
 
         <!-- ======================================
              FOTO SESUDAH
@@ -1141,7 +1280,6 @@
             📷 Foto Sesudah
           </div>
 
-
           <!-- Kamera -->
 
           <input
@@ -1152,7 +1290,6 @@
             capture="environment"
           >
 
-
           <!-- Galeri -->
 
           <input
@@ -1161,7 +1298,6 @@
             class="hidden-file-input"
             accept="image/*"
           >
-
 
           <div class="photo-button-container">
 
@@ -1173,7 +1309,6 @@
               📷 AMBIL DENGAN KAMERA
             </button>
 
-
             <button
               type="button"
               class="gallery-button"
@@ -1184,14 +1319,12 @@
 
           </div>
 
-
           <div
             class="photo-name"
             id="namaFotoSesudah"
           >
             Belum ada foto dipilih
           </div>
-
 
           <img
             id="previewSesudah"
@@ -1203,7 +1336,6 @@
 
       </div>
 
-
       <!-- ======================================
            SUBMIT
       ======================================= -->
@@ -1213,9 +1345,9 @@
         class="submit-button"
         id="submitButton"
       >
-        KIRIM LAPORAN
+        <span class="submit-icon">✓</span>
+        <span class="submit-text">KIRIM LAPORAN</span>
       </button>
-
 
     </form>
 
@@ -1486,22 +1618,6 @@
       ]
     };
 
-    //   "LAINNYA": [
-    //     "CCS",
-    //     "CUT STROBLE",
-    //     "CUTTING",
-    //     "EMBROIDERY",
-    //     "HF WELDING",
-    //     "LAMINATING",
-    //     "LCA",
-    //     "MCC",
-    //     "NOSEW",
-    //     "SCREEN PRINTING",
-    //     "SEWING",
-    //     "UPS CUTTING"
-    //   ]
-    // };
-
     /* ============================================================
       FUNCTION UPDATE AREA
     ============================================================ */
@@ -1718,10 +1834,14 @@
       const status =
         document.getElementById(statusId);
 
+      nikInput.classList.remove(
+        "nik-checking",
+        "nik-success",
+        "nik-error"
+      );
 
       const nik =
         nikInput.value.trim();
-
 
       namaInput.value =
         "";
@@ -1732,13 +1852,9 @@
       status.className =
         "employee-status";
 
-
       if (!nik) {
-
         return null;
-
       }
-
 
       /*
         Jika NIK sudah pernah dicari,
@@ -1751,19 +1867,33 @@
           nikCache[nik];
 
         status.textContent =
-          "✓ NIK ditemukan";
+          "✓ Nama Karyawan ditemukan";
 
         status.className =
           "employee-status status-success";
+
+        // Border hijau
+        nikInput.classList.remove(
+          "nik-error"
+        );
+
+        nikInput.classList.add(
+          "nik-success"
+        );
 
         return nikCache[nik];
 
       }
 
-
       status.textContent =
-        "Mencari NIK...";
+        "🔄 Mencari data karyawan...";
 
+      status.className =
+        "employee-status checking";
+
+      nikInput.classList.add(
+        "nik-checking"
+      );
 
       try {
 
@@ -1775,7 +1905,6 @@
           .select("nik, nama")
           .eq("nik", nik)
           .maybeSingle();
-
 
         if (error) {
 
@@ -1790,10 +1919,13 @@
           status.className =
             "employee-status status-error";
 
+          nikInput.classList.add(
+            "nik-error"
+          );
+
           return null;
 
         }
-
 
         if (data) {
 
@@ -1804,21 +1936,38 @@
             data.nama;
 
           status.textContent =
-            "✓ NIK ditemukan";
+            "✓ Nama Karyawan ditemukan";
 
           status.className =
             "employee-status status-success";
+
+          // Border hijau
+          nikInput.classList.remove(
+            "nik-error"
+          );
+
+          nikInput.classList.add(
+            "nik-success"
+          );
 
           return data.nama;
 
         }
 
-
         status.textContent =
-          "✕ NIK tidak ditemukan.";
+          "✕ Nama Karyawan tidak ditemukan.";
 
         status.className =
           "employee-status status-error";
+
+        // Border merah
+        nikInput.classList.remove(
+          "nik-success"
+        );
+
+        nikInput.classList.add(
+          "nik-error"
+        );
 
         return null;
 
@@ -1836,6 +1985,10 @@
 
         status.className =
           "employee-status status-error";
+        
+        nikInput.classList.add(
+          "nik-error"
+        );
 
         return null;
 
@@ -1843,6 +1996,119 @@
 
     }
 
+    /* ============================================================
+      PROGRESSIVE DISCLOSURE - PIC
+    ============================================================ */
+
+    const btnTambahPIC2 =
+      document.getElementById("btnTambahPIC2");
+
+    const btnTambahPIC3 =
+      document.getElementById("btnTambahPIC3");
+
+    const picBox2 =
+      document.getElementById("picBox2");
+
+    const picBox3 =
+      document.getElementById("picBox3");
+
+    /* TAMBAH PIC 2 */
+
+    btnTambahPIC2.addEventListener(
+      "click",
+      function() {
+
+        picBox2.style.display = "block";
+
+        btnTambahPIC2.style.display = "none";
+
+        btnTambahPIC3.style.display = "block";
+
+        document
+          .getElementById("nik2")
+          .focus();
+
+      }
+    );
+
+    /* TAMBAH PIC 3 */
+
+    btnTambahPIC3.addEventListener(
+      "click",
+      function() {
+
+        picBox3.style.display = "block";
+
+        btnTambahPIC3.style.display = "none";
+
+        document
+          .getElementById("nik3")
+          .focus();
+
+      }
+    );
+
+    /* ============================================================
+      HAPUS PIC 2
+    ============================================================ */
+
+    const btnHapusPIC2 =
+      document.getElementById("btnHapusPIC2");
+
+    const btnHapusPIC3 =
+      document.getElementById("btnHapusPIC3");
+
+    btnHapusPIC2.addEventListener(
+      "click",
+      function() {
+
+        /* Kosongkan data PIC 2 */
+        document.getElementById("nik2").value = "";
+        document.getElementById("nama2").value = "";
+
+        document.getElementById("nikStatus2").textContent = "";
+
+        /* Sembunyikan PIC 2 */
+        picBox2.style.display = "none";
+
+        /* Kembalikan tombol Tambah PIC 2 */
+        btnTambahPIC2.style.display = "block";
+
+        /* PIC 3 juga disembunyikan */
+        document.getElementById("nik3").value = "";
+        document.getElementById("nama3").value = "";
+
+        document.getElementById("nikStatus3").textContent = "";
+
+        picBox3.style.display = "none";
+
+        btnTambahPIC3.style.display = "none";
+
+      }
+    );
+
+    /* ============================================================
+      HAPUS PIC 3
+    ============================================================ */
+
+    btnHapusPIC3.addEventListener(
+      "click",
+      function() {
+
+        /* Kosongkan data PIC 3 */
+        document.getElementById("nik3").value = "";
+        document.getElementById("nama3").value = "";
+
+        document.getElementById("nikStatus3").textContent = "";
+
+        /* Sembunyikan PIC 3 */
+        picBox3.style.display = "none";
+
+        /* Kembalikan tombol Tambah PIC 3 */
+        btnTambahPIC3.style.display = "block";
+
+      }
+    );
 
     /* ============================================================
        EVENT NIK
@@ -1853,70 +2119,109 @@
       namaId,
       statusId
     ) {
-      const nikInput =
-        document.getElementById(nikId);
 
-      nikInput.addEventListener(
-        "input",
-        function() {
+  const nikInput =
+    document.getElementById(nikId);
 
-          // Hanya izinkan angka
-          this.value =
-            this.value.replace(/\D/g, "");
+  if (!nikInput) return;
 
-          const nik =
-            this.value.trim();
+  nikInput.addEventListener(
+    "input",
+    function() {
 
-          const namaInput =
-            document.getElementById(namaId);
+      // ======================================================
+      // 1. HANYA IZINKAN ANGKA
+      // ======================================================
 
-          const status =
-            document.getElementById(statusId);
+      this.value =
+        this.value.replace(/\D/g, "");
 
-          // Bersihkan nama dan status
-          // ketika NIK berubah
-          namaInput.value = "";
-          status.textContent = "";
-          status.className =
-            "employee-status";
+      const nik =
+        this.value.trim();
 
-          // Belum 5 digit → jangan query
-          if (nik.length < 5) {
-            return;
-          }
+      const namaInput =
+        document.getElementById(namaId);
 
-          // NIK sudah 5 digit → cek database
-          cekNik(
-            nikId,
-            namaId,
-            statusId
-          );
-        }
+      const status =
+        document.getElementById(statusId);
+
+
+      // ======================================================
+      // 2. RESET NAMA DAN STATUS
+      // ======================================================
+
+      namaInput.value = "";
+
+      status.textContent = "";
+
+      status.className =
+        "employee-status";
+
+      // Reset warna border input NIK
+      nikInput.classList.remove(
+        "nik-success",
+        "nik-error"
       );
+
+      // ======================================================
+      // 3. BELUM 5 DIGIT
+      // ======================================================
+
+      if (nik.length < 5) {
+
+        return;
+
+      }
+
+
+      // ======================================================
+      // 4. NIK SUDAH CUKUP → TAMPILKAN STATUS
+      // ======================================================
+
+      status.textContent =
+        "🔄 Mencari data karyawan...";
+
+      status.className =
+        "employee-status checking";
+
+
+      // ======================================================
+      // 5. CEK DATABASE
+      // ======================================================
+
+      cekNik(
+        nikId,
+        namaId,
+        statusId
+      );
+
     }
+  );
+}
 
-    /* ============================================================
-      AKTIFKAN UNTUK PIC 1, PIC 2, PIC 3
-    ============================================================ */
 
-    setupNikInput(
-      "nik1",
-      "nama1",
-      "nikStatus1"
-    );
+/* ============================================================
+   AKTIFKAN UNTUK PIC 1, PIC 2, PIC 3
+============================================================ */
 
-    setupNikInput(
-      "nik2",
-      "nama2",
-      "nikStatus2"
-    );
+setupNikInput(
+  "nik1",
+  "nama1",
+  "nikStatus1"
+);
 
-    setupNikInput(
-      "nik3",
-      "nama3",
-      "nikStatus3"
-    );
-    
+setupNikInput(
+  "nik2",
+  "nama2",
+  "nikStatus2"
+);
+
+setupNikInput(
+  "nik3",
+  "nama3",
+  "nikStatus3"
+);
+
     /* ============================================================
        DURASI
     ============================================================ */
@@ -3077,13 +3382,11 @@
             .value
             .trim();
 
-
         const nama1 =
           document
             .getElementById("nama1")
             .value
             .trim();
-
 
         if (!nik1) {
 
@@ -3095,7 +3398,6 @@
 
         }
 
-
         if (!nama1) {
 
           alert(
@@ -3105,7 +3407,6 @@
           return;
 
         }
-
 
         /* ========================================
            VALIDASI PIC 2
@@ -3117,13 +3418,11 @@
             .value
             .trim();
 
-
         const nama2 =
           document
             .getElementById("nama2")
             .value
             .trim();
-
 
         if (
           nik2 &&
@@ -3138,7 +3437,6 @@
 
         }
 
-
         /* ========================================
            VALIDASI PIC 3
         ======================================== */
@@ -3149,13 +3447,11 @@
             .value
             .trim();
 
-
         const nama3 =
           document
             .getElementById("nama3")
             .value
             .trim();
-
 
         if (
           nik3 &&
@@ -3170,7 +3466,6 @@
 
         }
 
-
         /* ========================================
            VALIDASI WAKTU
         ======================================== */
@@ -3179,7 +3474,6 @@
           document
             .getElementById("mulai")
             .value;
-
 
         const selesai =
           document
@@ -3190,7 +3484,6 @@
         const durasi =
           calculateDuration();
 
-
         if (durasi === null) {
 
           alert(
@@ -3200,7 +3493,6 @@
           return;
 
         }
-
 
         /* ========================================
            FOTO
@@ -3216,7 +3508,6 @@
 
         }
 
-
         if (!fotoSesudahFile) {
 
           alert(
@@ -3226,7 +3517,6 @@
           return;
 
         }
-
 
         /* ========================================
            ID MESIN OPSIONAL
@@ -3238,14 +3528,12 @@
             .value
             .trim();
 
-
         /* ========================================
            TANGGAL
         ======================================== */
 
         const tanggal =
           tanggalInput.value;
-
 
         /* ========================================
            FOLDER ID
@@ -3257,14 +3545,12 @@
         const folderId =
           generateFolderId();
 
-
         /* ========================================
            CREATED AT
         ======================================== */
 
         const createdAt =
           generateCreatedAt();
-
 
         /* ========================================
            DISABLE BUTTON
@@ -3273,9 +3559,9 @@
         submitButton.disabled =
           true;
 
-        submitButton.textContent =
-          "MENGIRIM...";
-
+        submitButton.querySelector(".submit-icon").textContent = "⏳";
+        submitButton.querySelector(".submit-text").textContent =
+          "MENGIRIM LAPORAN...";
 
         try {
 
@@ -3288,14 +3574,12 @@
             "loading"
           );
 
-
           const fotoSebelumPath =
             await uploadPhoto(
               fotoSebelumFile,
               folderId,
               "before"
             );
-
 
           /* ======================================
              UPLOAD FOTO SESUDAH
@@ -3459,8 +3743,9 @@
           submitButton.disabled =
             false;
 
-          submitButton.textContent =
-            "KIRIM LAPORAN";
+          submitButton.querySelector(".submit-icon").textContent = "✓";
+          submitButton.querySelector(".submit-text").textContent =
+          "KIRIM LAPORAN";
 
         }
 
