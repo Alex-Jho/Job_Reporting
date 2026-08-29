@@ -28,12 +28,17 @@
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       font-family: 'Roboto', sans-serif;
-      background-color: #f4f7fc;
+      background-color: #f3f6fa;
       margin: 0;
       padding: 0;
-      color: #333;
+      color: #1f2937;
+      line-height: 1.5;
     }
 
     /* ==========================================
@@ -41,14 +46,19 @@
     ========================================== */
 
     header {
-      background-color: #007bff;
+      background: linear-gradient(
+        135deg,
+        #007bff,
+        #0056b3
+      );
       color: white;
-      padding: 20px;
-      font-size: 30px;
-      font-weight: 600;
+      padding: 22px 20px;
+      font-size: 28px;
+      font-weight: 700;
       width: 100%;
       text-align: center;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
+      letter-spacing: 0.2px;
     }
 
     /* ==========================================
@@ -56,22 +66,26 @@
     ========================================== */
 
     .form-container {
-      background-color: white;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-      padding: 30px;
+      background-color: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+      padding: 32px;
       width: calc(100% - 30px);
       max-width: 650px;
-      margin: 25px auto;
+      margin: 28px auto;
     }
+
+    /* ==========================================
+      FORM TITLE
+    ========================================== */
 
     h2 {
       text-align: center;
-      color: #007bff;
+      color: #1f2937;
       font-size: 24px;
       margin-top: 0;
-      margin-bottom: 25px;
-      font-weight: 500;
+      margin-bottom: 28px;
+      font-weight: 700;
     }
 
     /* ==========================================
@@ -79,16 +93,22 @@
     ========================================== */
 
     .section {
-      margin-bottom: 25px;
+      margin-bottom: 30px;
     }
 
     .section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
       font-size: 18px;
       font-weight: 700;
-      color: #007bff;
-      border-bottom: 2px solid #007bff;
-      padding-bottom: 8px;
-      margin-bottom: 15px;
+      color: #1f2937;
+
+      padding-bottom: 10px;
+      margin-bottom: 18px;
+
+      border-bottom: 1px solid #e5e7eb;
     }
 
     /* ==========================================
@@ -97,9 +117,10 @@
 
     label {
       display: block;
-      font-size: 15px;
-      font-weight: 500;
-      margin-bottom: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 7px;
     }
 
     /* ==========================================
@@ -108,26 +129,60 @@
 
     input,
     textarea,
-    select,
-    button {
+    select {
       width: 100%;
-      padding: 13px;
-      margin-bottom: 14px;
+      min-height: 48px;
+
+      padding: 12px 14px;
+      margin-bottom: 16px;
+
       border-radius: 10px;
-      border: 1px solid #ddd;
+      border: 1px solid #d1d5db;
+
       font-family: inherit;
       font-size: 16px;
-      background-color: #fafafa;
+      color: #1f2937;
+
+      background-color: #ffffff;
+
+      transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
     }
+
+    /* Placeholder */
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #9ca3af;
+    }
+
+    /* Focus */
 
     input:focus,
     textarea:focus,
     select:focus {
       border-color: #007bff;
       outline: none;
-      box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
-      background-color: white;
+
+      box-shadow:
+        0 0 0 3px rgba(0, 123, 255, 0.12);
+
+      background-color: #ffffff;
     }
+
+    /* Disabled */
+
+    input:disabled,
+    textarea:disabled,
+    select:disabled {
+      background-color: #f3f4f6;
+      color: #6b7280;
+      cursor: not-allowed;
+    }
+
+    /* Textarea */
 
     textarea {
       resize: vertical;
@@ -139,32 +194,63 @@
     ========================================== */
 
     .pic-box {
-      background-color: #f8f9fa;
-      border: 1px solid #e1e1e1;
-      border-radius: 10px;
-      padding: 15px;
-      margin-bottom: 15px;
+      background-color: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 18px;
+      margin-bottom: 16px;
+
+      transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
     }
+
+    .pic-box:hover {
+      border-color: #cbd5e1;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    /* ==========================================
+      PIC TITLE
+    ========================================== */
 
     .pic-title {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+
+      font-size: 15px;
       font-weight: 700;
-      margin-bottom: 10px;
-      color: #555;
+      color: #1f2937;
+
+      margin-bottom: 16px;
     }
 
+    /* ==========================================
+      NAMA KARYAWAN
+    ========================================== */
+
     .employee-name {
-      background-color: #e9f5ff;
-      border: 1px solid #b8ddff;
-      color: #0056b3;
-      font-weight: 500;
+      background-color: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      color: #166534;
+      font-weight: 600;
+
+      cursor: default;
     }
+
+    /* ==========================================
+      STATUS NIK
+    ========================================== */
 
     .employee-status {
       font-size: 13px;
       margin-top: -8px;
       margin-bottom: 12px;
       min-height: 16px;
+
       font-weight: 500;
+
       transition: all 0.2s ease;
     }
 
@@ -278,43 +364,75 @@
       margin-bottom: 14px;
     }
 
+    /* ==========================================
+      SCAN BARCODE BUTTON
+    ========================================== */
+
     .scan-button {
       width: auto;
       min-width: 145px;
-      background-color: #28a745;
+
+      background-color: #16a34a;
       color: white;
+
       border: none;
+      border-radius: 10px;
+
       font-size: 15px;
       font-weight: 700;
+
       cursor: pointer;
       margin-bottom: 14px;
+
       white-space: nowrap;
+
+      transition:
+        background-color 0.2s ease,
+        transform 0.1s ease,
+        box-shadow 0.2s ease;
     }
 
     .scan-button:hover {
-      background-color: #218838;
+      background-color: #15803d;
+      box-shadow: 0 3px 8px rgba(22, 163, 74, 0.2);
+    }
+
+    .scan-button:active {
+      transform: scale(0.98);
     }
 
     .scan-button:disabled {
-      background-color: #999;
+      background-color: #9ca3af;
       cursor: not-allowed;
+      box-shadow: none;
     }
 
+    /* ==========================================
+      OPTIONAL TEXT
+    ========================================== */
+
     .optional-text {
-      color: #777;
+      color: #6b7280;
       font-size: 13px;
       font-weight: 400;
     }
 
+    /* ==========================================
+      MACHINE INFO
+    ========================================== */
+
     .machine-info {
-      background-color: #f8f9fa;
-      border: 1px solid #e1e1e1;
-      border-radius: 8px;
-      padding: 10px 12px;
+      background-color: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 9px;
+
+      padding: 11px 13px;
+
       font-size: 13px;
-      color: #666;
+      color: #64748b;
+
       margin-top: -5px;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     /* ==========================================
@@ -323,53 +441,89 @@
 
     .scanner-container {
       display: none;
-      background-color: #111;
-      border-radius: 12px;
-      padding: 15px;
+
+      background-color: #111827;
+      border-radius: 14px;
+
+      padding: 16px;
+
       margin-top: 10px;
       margin-bottom: 20px;
+
+      box-shadow: 0 5px 16px rgba(0, 0, 0, 0.15);
     }
 
     .scanner-title {
       color: white;
       text-align: center;
+
       font-size: 16px;
       font-weight: 700;
-      margin-bottom: 12px;
+
+      margin-bottom: 14px;
     }
 
     #reader {
       width: 100%;
+
       background-color: white;
-      border-radius: 8px;
+      border-radius: 10px;
+
       overflow: hidden;
     }
+
+    /* ==========================================
+      CLOSE SCANNER
+    ========================================== */
 
     .close-scanner-button {
       background-color: #dc3545;
       color: white;
+
       border: none;
+      border-radius: 10px;
+
       margin-top: 12px;
       margin-bottom: 0;
+
       cursor: pointer;
+
       font-size: 15px;
       font-weight: 700;
+
+      transition:
+        background-color 0.2s ease,
+        transform 0.1s ease;
     }
 
     .close-scanner-button:hover {
-      background-color: #c82333;
+      background-color: #bb2d3b;
     }
+
+    .close-scanner-button:active {
+      transform: scale(0.98);
+    }
+
+    /* ==========================================
+      SCAN RESULT
+    ========================================== */
 
     .scan-result {
       display: none;
-      background-color: #e9f7ef;
-      border: 1px solid #b7dfc6;
-      color: #155724;
-      border-radius: 8px;
-      padding: 10px 12px;
+
+      background-color: #f0fdf4;
+      border: 1px solid #bbf7d0;
+
+      color: #166534;
+
+      border-radius: 9px;
+
+      padding: 11px 13px;
+
       margin-top: 5px;
       margin-bottom: 14px;
-      font-weight: 500;
+
+      font-weight: 600;
       font-size: 14px;
     }
 
@@ -380,18 +534,31 @@
     .time-container {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 15px;
+      gap: 14px;
+      align-items: start;
     }
 
     .duration-box {
-      background-color: #e9f5ff;
-      border: 1px solid #b8ddff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      min-height: 48px;
+
+      background-color: #f0f7ff;
+      border: 1px solid #bfdbfe;
       border-radius: 10px;
-      padding: 13px;
-      margin-top: 5px;
-      color: #0056b3;
+
+      padding: 12px 14px;
+      margin-top: 2px;
+
+      color: #1d4ed8;
+
+      font-size: 15px;
       font-weight: 700;
+
       text-align: center;
+      line-height: 1.4;
     }
 
     /* ==========================================
@@ -433,25 +600,59 @@
       color: white;
       border: none;
       cursor: pointer;
+
+      font-size: 15px;
       font-weight: 700;
+
+      min-height: 48px;
+      padding: 12px 14px;
+
+      border-radius: 10px;
       margin-bottom: 10px;
+
+      transition:
+        background-color 0.2s ease,
+        transform 0.1s ease,
+        box-shadow 0.2s ease;
     }
 
     .camera-button:hover {
       background-color: #0056b3;
+      box-shadow: 0 3px 8px rgba(0, 123, 255, 0.2);
+    }
+
+    .camera-button:active {
+      transform: scale(0.98);
     }
 
     .gallery-button {
-      background-color: #6c757d;
-      color: white;
-      border: none;
+      background-color: #f3f4f6;
+      color: #374151;
+      border: 1px solid #d1d5db;
       cursor: pointer;
+
+      font-size: 15px;
       font-weight: 700;
+
+      min-height: 48px;
+      padding: 12px 14px;
+
+      border-radius: 10px;
       margin-bottom: 10px;
+
+      transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.1s ease;
     }
 
     .gallery-button:hover {
-      background-color: #545b62;
+      background-color: #e5e7eb;
+      border-color: #9ca3af;
+    }
+
+    .gallery-button:active {
+      transform: scale(0.98);
     }
 
     .photo-name {
@@ -478,11 +679,23 @@
 
     .status-box {
       display: none;
-      padding: 13px;
+
+      padding: 14px 16px;
       border-radius: 10px;
+
       margin-bottom: 20px;
-      font-weight: 500;
+
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.5;
+
       text-align: center;
+
+      border: 1px solid transparent;
+
+      transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease;
     }
 
     .status-loading {
@@ -677,11 +890,6 @@
           🏭 FACTORY
         </div>
 
-
-        <label for="factory">
-          Factory
-        </label>
-
         <select
           id="factory"
           name="factory"
@@ -755,10 +963,6 @@
           📍 AREA
         </div>
 
-        <label for="area">
-          Area
-        </label>
-
         <select
           id="area"
           name="area"
@@ -787,10 +991,6 @@
         <div class="section-title">
           🔢 LINE
         </div>
-
-        <label for="line">
-          Line
-        </label>
 
         <input
           type="text"
@@ -1004,12 +1204,6 @@
           🔧 PEKERJAAN / AKTIVITAS
         </div>
 
-
-        <label for="pekerjaan">
-          Pekerjaan / Aktivitas
-        </label>
-
-
         <select
           id="pekerjaan"
           name="pekerjaan"
@@ -1061,12 +1255,6 @@
           </span>
 
         </div>
-
-
-        <label for="idMesin">
-          ID Mesin
-        </label>
-
 
         <div class="machine-input-wrapper">
 
