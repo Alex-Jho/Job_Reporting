@@ -579,44 +579,44 @@
             Pilih Factory
           </option>
 
-          <option value="Plant A">
-            Plant A
+          <option value="PLANT A">
+            PLANT A
           </option>
 
-          <option value="UPS Plant A">
-            UPS Plant A
+          <option value="UPS PLANT A">
+            UPS PLANT A
           </option>
 
-          <option value="Plant B">
-            Plant B
+          <option value="PLANT B">
+            PLANT B
           </option>
 
-          <option value="UPS Plant B">
-            UPS Plant B
+          <option value="UPS PLANT B">
+            UPS PLANT B
           </option>
 
-          <option value="Plant C">
-            Plant C
+          <option value="PLANT C">
+            PLANT C
           </option>
 
-          <option value="UPS Plant C">
-            UPS Plant C
+          <option value="UPS PLANT C">
+            UPS PLANT C
           </option>
 
-          <option value="Plant D">
-            Plant D
+          <option value="PLANT D">
+            PLANT D
           </option>
 
-          <option value="UPS Plant D">
-            UPS Plant D
+          <option value="UPS PLANT D">
+            UPS PLANT D
           </option>
 
-          <option value="Warehouse">
-            Warehouse
+          <option value="WAREHOUSE">
+            WAREHOUSE
           </option>
 
           <option value="LAINNYA">
-            Lainnya
+            LAINNYA
           </option>
 
         </select>
@@ -638,11 +638,9 @@
       ======================================= -->
 
       <div class="section">
-
         <div class="section-title">
           📍 AREA
         </div>
-
 
         <label for="area">
           Area
@@ -653,37 +651,10 @@
           name="area"
           required
         >
-
           <option value="" disabled selected>
-            Pilih Area
+            Pilih Factory terlebih dahulu
           </option>
-
-          <option value="F1-SEWING">
-            F1-SEWING
-          </option>
-
-          <option value="F2-SEWING">
-            F2-SEWING
-          </option>
-
-          <option value="F1-ASP">
-            F1-ASP
-          </option>
-
-          <option value="F2-ASP">
-            F2-ASP
-          </option>
-
-          <option value="F2-BORDIR">
-            F2-BORDIR
-          </option>
-
-          <option value="LAINNYA">
-            Lainnya
-          </option>
-
         </select>
-
 
         <input
           type="text"
@@ -692,7 +663,6 @@
           placeholder="Masukkan nama area..."
           style="display:none;"
         >
-
       </div>
 
 
@@ -701,104 +671,23 @@
       ======================================= -->
 
       <div class="section">
-
         <div class="section-title">
           🔢 LINE
         </div>
-
 
         <label for="line">
           Line
         </label>
 
-        <select
-          id="line"
-          name="line"
-          required
-        >
-
-          <option value="" disabled selected>
-            Pilih Line
-          </option>
-
-          <option value="LINE 1">1</option>
-          <option value="LINE 2">2</option>
-          <option value="LINE 3">3</option>
-          <option value="LINE 4">4</option>
-          <option value="LINE 5">5</option>
-          <option value="LINE 6">6</option>
-          <option value="LINE 7">7</option>
-          <option value="LINE 8">8</option>
-          <option value="LINE 9">9</option>
-          <option value="LINE 10">10</option>
-          <option value="LINE 11">11</option>
-          <option value="LINE 12">12</option>
-          <option value="LINE 13">13</option>
-          <option value="LINE 14">14</option>
-          <option value="LINE 15">15</option>
-          <option value="LINE 16">16</option>
-          <option value="LINE 17">17</option>
-          <option value="LINE 18">18</option>
-          <option value="LINE 19">19</option>
-          <option value="LINE 20">20</option>
-          <option value="LINE 21">21</option>
-          <option value="LINE 22">22</option>
-          <option value="LINE 23">23</option>
-          <option value="LINE 24">24</option>
-          <option value="LINE 25">25</option>
-          <option value="LINE 26">26</option>
-          <option value="LINE 27">27</option>
-          <option value="LINE 28">28</option>
-          <option value="LINE 29">29</option>
-          <option value="LINE 30">30</option>
-          <option value="LINE 31">31</option>
-          <option value="LINE 32">32</option>
-          <option value="LINE 33">33</option>
-          <option value="LINE 34">34</option>
-          <option value="LINE 35">35</option>
-          <option value="LINE 36">36</option>
-          <option value="LINE 37">37</option>
-          <option value="LINE 38">38</option>
-          <option value="LINE 39">39</option>
-          <option value="LINE 40">40</option>
-          <option value="LINE 41">41</option>
-          <option value="LINE 42">42</option>
-          <option value="LINE 43">43</option>
-          <option value="LINE 44">44</option>
-          <option value="LINE 45">45</option>
-          <option value="LINE 46">46</option>
-          <option value="LINE 47">47</option>
-          <option value="LINE 48">48</option>
-          <option value="LINE 49">49</option>
-          <option value="LINE 50">50</option>
-          <option value="LINE 51">51</option>
-          <option value="LINE 52">52</option>
-          <option value="LINE 53">53</option>
-          <option value="LINE 54">54</option>
-          <option value="LINE 55">55</option>
-          <option value="LINE 56">56</option>
-          <option value="LINE 57">57</option>
-          <option value="LINE 58">58</option>
-          <option value="LINE 59">59</option>
-          <option value="LINE 60">60</option>
-
-          <option value="LAINNYA">
-            Lainnya
-          </option>
-
-        </select>
-
-
         <input
           type="text"
-          id="lineOther"
-          name="lineOther"
-          placeholder="Masukkan line..."
-          style="display:none;"
+          id="line"
+          name="line"
+          placeholder="Ketik Line..."
+          required
+          autocomplete="off"
         >
-
       </div>
-
 
       <!-- ======================================
            PIC
@@ -829,7 +718,7 @@
             id="nik1"
             name="nik1"
             inputmode="numeric"
-            maxlength="10"
+            maxlength="6"
             placeholder="Masukkan NIK"
             required
           >
@@ -880,7 +769,7 @@
             id="nik2"
             name="nik2"
             inputmode="numeric"
-            maxlength="10"
+            maxlength="6"
             placeholder="Masukkan NIK"
           >
 
@@ -930,7 +819,7 @@
             id="nik3"
             name="nik3"
             inputmode="numeric"
-            maxlength="10"
+            maxlength="6"
             placeholder="Masukkan NIK"
           >
 
@@ -1491,9 +1380,8 @@
       }
     );
 
-
     /* ============================================================
-       AREA - LAINNYA
+      AREA FILTER BERDASARKAN FACTORY
     ============================================================ */
 
     const areaSelect =
@@ -1502,6 +1390,243 @@
     const areaOther =
       document.getElementById("areaOther");
 
+    const areaList = {
+
+      "PLANT A": [
+        "CUTTING",
+        "SEWING",
+        "MCC",
+        "CCS"
+      ],
+
+      "UPS PLANT A": [
+        "NOSEW",
+        "UPS CUTTING",
+        "LCA",
+        "CCS"
+      ],
+
+      "PLANT B": [
+        "CUTTING",
+        "SEWING",
+        "MCC",
+        "CCS",
+        "CUT STROBLE"
+      ],
+
+      "UPS PLANT B": [
+        "HF WELDING",
+        "SCREEN PRINTING",
+        "CCS",
+        "EMBROIDERY"
+      ],
+
+      "WAREHOUSE": [
+        "LAMINATING"
+      ],
+
+      "PLANT C": [
+        "CCS",
+        "CUT STROBLE",
+        "CUTTING",
+        "EMBROIDERY",
+        "HF WELDING",
+        "LAMINATING",
+        "LCA",
+        "MCC",
+        "NOSEW",
+        "SCREEN PRINTING",
+        "SEWING",
+        "UPS CUTTING"
+      ],
+
+      "UPS PLANT C": [
+        "CCS",
+        "CUT STROBLE",
+        "CUTTING",
+        "EMBROIDERY",
+        "HF WELDING",
+        "LAMINATING",
+        "LCA",
+        "MCC",
+        "NOSEW",
+        "SCREEN PRINTING",
+        "SEWING",
+        "UPS CUTTING"
+      ],
+
+      "PLANT D": [
+        "CCS",
+        "CUT STROBLE",
+        "CUTTING",
+        "EMBROIDERY",
+        "HF WELDING",
+        "LAMINATING",
+        "LCA",
+        "MCC",
+        "NOSEW",
+        "SCREEN PRINTING",
+        "SEWING",
+        "UPS CUTTING"
+      ],
+
+      "UPS PLANT D": [
+        "CCS",
+        "CUT STROBLE",
+        "CUTTING",
+        "EMBROIDERY",
+        "HF WELDING",
+        "LAMINATING",
+        "LCA",
+        "MCC",
+        "NOSEW",
+        "SCREEN PRINTING",
+        "SEWING",
+        "UPS CUTTING"
+      ]
+    };
+
+    //   "LAINNYA": [
+    //     "CCS",
+    //     "CUT STROBLE",
+    //     "CUTTING",
+    //     "EMBROIDERY",
+    //     "HF WELDING",
+    //     "LAMINATING",
+    //     "LCA",
+    //     "MCC",
+    //     "NOSEW",
+    //     "SCREEN PRINTING",
+    //     "SEWING",
+    //     "UPS CUTTING"
+    //   ]
+    // };
+
+    /* ============================================================
+      FUNCTION UPDATE AREA
+    ============================================================ */
+
+    function updateAreaOptions(factory) {
+
+      // Bersihkan pilihan Area sebelumnya
+      areaSelect.innerHTML = "";
+
+      // Reset input Area Lainnya
+      areaOther.style.display = "none";
+      areaOther.required = false;
+      areaOther.value = "";
+
+      // Jika Factory belum dipilih
+      if (!factory) {
+
+        const defaultOption =
+          document.createElement("option");
+
+        defaultOption.value = "";
+        defaultOption.textContent =
+          "Pilih Factory terlebih dahulu";
+
+        defaultOption.disabled = true;
+        defaultOption.selected = true;
+
+        areaSelect.appendChild(
+          defaultOption
+        );
+
+        return;
+      }
+
+      // Ambil daftar area berdasarkan Factory
+      const areas =
+        areaList[factory] || [];
+
+      // Default option
+      const defaultOption =
+        document.createElement("option");
+
+      defaultOption.value = "";
+      defaultOption.textContent =
+        "Pilih Area";
+
+      defaultOption.disabled = true;
+      defaultOption.selected = true;
+
+      areaSelect.appendChild(
+        defaultOption
+      );
+
+      // Masukkan area ke dropdown
+      areas.forEach(function(area) {
+
+        const option =
+          document.createElement("option");
+
+        option.value = area;
+        option.textContent = area;
+
+        areaSelect.appendChild(
+          option
+        );
+
+      });
+
+      // Tambahkan pilihan Lainnya
+      const otherOption =
+        document.createElement("option");
+
+      otherOption.value =
+        "LAINNYA";
+
+      otherOption.textContent =
+        "LAINNYA";
+
+      areaSelect.appendChild(
+        otherOption
+      );
+    }
+
+    /* ============================================================
+      FACTORY CHANGE
+    ============================================================ */
+
+    factorySelect.addEventListener(
+      "change",
+      function() {
+
+        const factory =
+          this.value;
+
+        // Logic Factory Lainnya
+        if (factory === "LAINNYA") {
+
+          factoryOther.style.display =
+            "block";
+
+          factoryOther.required =
+            true;
+
+        } else {
+
+          factoryOther.style.display =
+            "none";
+
+          factoryOther.required =
+            false;
+
+          factoryOther.value =
+            "";
+
+        }
+
+        // Update Area
+        updateAreaOptions(factory);
+
+      }
+    );
+
+    /* ============================================================
+      AREA - LAINNYA
+    ============================================================ */
 
     areaSelect.addEventListener(
       "change",
@@ -1530,47 +1655,6 @@
 
       }
     );
-
-
-    /* ============================================================
-       LINE - LAINNYA
-    ============================================================ */
-
-    const lineSelect =
-      document.getElementById("line");
-
-    const lineOther =
-      document.getElementById("lineOther");
-
-
-    lineSelect.addEventListener(
-      "change",
-      function() {
-
-        if (this.value === "LAINNYA") {
-
-          lineOther.style.display =
-            "block";
-
-          lineOther.required =
-            true;
-
-        } else {
-
-          lineOther.style.display =
-            "none";
-
-          lineOther.required =
-            false;
-
-          lineOther.value =
-            "";
-
-        }
-
-      }
-    );
-
 
     /* ============================================================
        PEKERJAAN - LAINNYA
@@ -1764,54 +1848,75 @@
        EVENT NIK
     ============================================================ */
 
-    document
-      .getElementById("nik1")
-      .addEventListener(
-        "blur",
-        () => {
+    function setupNikInput(
+      nikId,
+      namaId,
+      statusId
+    ) {
+      const nikInput =
+        document.getElementById(nikId);
 
+      nikInput.addEventListener(
+        "input",
+        function() {
+
+          // Hanya izinkan angka
+          this.value =
+            this.value.replace(/\D/g, "");
+
+          const nik =
+            this.value.trim();
+
+          const namaInput =
+            document.getElementById(namaId);
+
+          const status =
+            document.getElementById(statusId);
+
+          // Bersihkan nama dan status
+          // ketika NIK berubah
+          namaInput.value = "";
+          status.textContent = "";
+          status.className =
+            "employee-status";
+
+          // Belum 5 digit → jangan query
+          if (nik.length < 5) {
+            return;
+          }
+
+          // NIK sudah 5 digit → cek database
           cekNik(
-            "nik1",
-            "nama1",
-            "nikStatus1"
+            nikId,
+            namaId,
+            statusId
           );
-
         }
       );
+    }
 
+    /* ============================================================
+      AKTIFKAN UNTUK PIC 1, PIC 2, PIC 3
+    ============================================================ */
 
-    document
-      .getElementById("nik2")
-      .addEventListener(
-        "blur",
-        () => {
+    setupNikInput(
+      "nik1",
+      "nama1",
+      "nikStatus1"
+    );
 
-          cekNik(
-            "nik2",
-            "nama2",
-            "nikStatus2"
-          );
+    setupNikInput(
+      "nik2",
+      "nama2",
+      "nikStatus2"
+    );
 
-        }
-      );
-
-
-    document
-      .getElementById("nik3")
-      .addEventListener(
-        "blur",
-        () => {
-
-          cekNik(
-            "nik3",
-            "nama3",
-            "nikStatus3"
-          );
-
-        }
-      );
-
-
+    setupNikInput(
+      "nik3",
+      "nama3",
+      "nikStatus3"
+    );
+    
     /* ============================================================
        DURASI
     ============================================================ */
@@ -2745,6 +2850,7 @@
 
       form.reset();
 
+      updateAreaOptions("");
 
       document
         .getElementById(
@@ -2753,7 +2859,6 @@
         .style.display =
         "none";
 
-
       document
         .getElementById(
           "areaOther"
@@ -2761,22 +2866,12 @@
         .style.display =
         "none";
 
-
-      document
-        .getElementById(
-          "lineOther"
-        )
-        .style.display =
-        "none";
-
-
       document
         .getElementById(
           "pekerjaanOther"
         )
         .style.display =
         "none";
-
 
       document
         .getElementById(
@@ -2785,7 +2880,6 @@
         .required =
         false;
 
-
       document
         .getElementById(
           "areaOther"
@@ -2793,22 +2887,12 @@
         .required =
         false;
 
-
-      document
-        .getElementById(
-          "lineOther"
-        )
-        .required =
-        false;
-
-
       document
         .getElementById(
           "pekerjaanOther"
         )
         .required =
         false;
-
 
       document
         .getElementById(
@@ -2817,14 +2901,12 @@
         .textContent =
         "";
 
-
       document
         .getElementById(
           "nikStatus2"
         )
         .textContent =
         "";
-
 
       document
         .getElementById(
@@ -2833,14 +2915,12 @@
         .textContent =
         "";
 
-
       document
         .getElementById(
           "durasi"
         )
         .textContent =
         "-";
-
 
       document
         .getElementById(
@@ -2849,15 +2929,12 @@
         .style.display =
         "none";
 
-
       resetPhotos();
-
 
       tanggalInput.value =
         getLocalDateString();
 
     }
-
 
     /* ============================================================
        SUBMIT FORM
@@ -2942,30 +3019,24 @@
            VALIDASI LINE
         ======================================== */
 
-        let line =
-          lineSelect.value;
+        const line =
+          document
+            .getElementById("line")
+            .value
+            .trim();
 
+        if (!line) {
 
-        if (line === "LAINNYA") {
+          alert(
+            "Silakan masukkan Line."
+          );
 
-          line =
-            lineOther.value.trim();
+          document
+            .getElementById("line")
+            .focus();
 
-
-          if (!line) {
-
-            alert(
-              "Silakan masukkan Line."
-            );
-
-            lineOther.focus();
-
-            return;
-
-          }
-
+          return;
         }
-
 
         /* ========================================
            VALIDASI PEKERJAAN
