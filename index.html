@@ -501,18 +501,6 @@
 
 <body>
 
-  <div style="
-    background:yellow;
-    color:black;
-    padding:15px;
-    margin:10px;
-    text-align:center;
-    font-size:18px;
-    font-weight:bold;
-  ">
-    TEST VERSION 123
-  </div>
-
   <!-- ==========================================
        HEADER
   ========================================== -->
@@ -3325,8 +3313,9 @@
 
                 }
               ])
-              .select()
-              .single();
+
+              // .select()
+              // .single();
 
 
           if (error) {
@@ -3359,9 +3348,6 @@
 
           alert(
             "LAPORAN BERHASIL DIKIRIM\n\n" +
-            "ID Laporan: " +
-            data.id +
-            "\n" +
             "Folder Foto: " +
             folderId
           );
